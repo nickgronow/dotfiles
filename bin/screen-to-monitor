@@ -1,0 +1,4 @@
+#!/bin/sh
+xrandr --dpi 144 --output DP1 --primary --auto --pos 0x0 --rotate normal --output eDP1 --off
+echo "Xft.dpi: 144" | xrdb -override
+systemctl --user restart dunst

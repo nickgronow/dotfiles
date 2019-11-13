@@ -1,0 +1,25 @@
+#!/bin/bash
+
+helm="/home/nick/.helm"
+tls="$helm/tls"
+
+if [ -z "$1" ]; then
+  hl='\033[0;33m'
+  nc='\033[0m' # No Color
+  projects="$(ls "$tls")"
+  current="$(cat "$tls/.current")"
+
+  for project in $projects; do
+    if [ "$current" = "$project" ]; then
+      echo -e "$hl$current$nc"
+    else
+      echo "$project"
+    fi
+  done
+elif [ -d "$tls/$1" ]; then
+  cp "$tls/$1/"*.pem "$helm/"
+  echo "$1" > "$tls/.current"
+  echo "Helm tls set to $1"
+else
+  echo "Could not locate Helm tls config for $1"
+fi

@@ -1,0 +1,37 @@
+[user]
+  email = nick@wov.io
+  name = Nick Gronow
+[alias]
+  co = commit -m
+  br = branch -v -v
+  st = status -sb
+  ch = checkout
+  aa = add --all :/
+	resh = reset --hard HEAD
+  ctags = "!.git/hooks/ctags"
+  mylog = log -p --author='Nick Gronow'
+  ls = log --decorate --oneline
+  lg = log --pretty=format:'%C(yellow)%h%Creset  %>(12)%C(green)%ar%Creset  %<(18)%C(bold blue)%aN%Creset %C(red)%d%Creset %s'
+  lgw = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar)%Creset %C(ul)(%cr)%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+  diff-file = diff -p --no-prefix -U1000
+[core]
+  quotepath = false
+  excludesfile = /home/nick/.gitignore_global
+[merge]
+  tool = fugitive
+[push]
+  default = upstream
+[color]
+  branch = auto
+  diff = auto
+  interactive = auto
+  status = auto
+  ui = true
+[mergetool "fugitive"]
+  cmd = vim -f -c \"Gdiff\" \"$MERGED\"
+[mergetool "diffconflicts"]
+  cmd = diffconflicts vim $BASE $LOCAL $REMOTE $MERGED
+  trustExitCode = true
+  keepBackup = false
+[log]
+  date = format-local:%m/%d/%y %l:%M%p

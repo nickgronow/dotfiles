@@ -1,0 +1,6 @@
+#!/bin/bash
+if [ $1 = 'wov' ]; then
+  ps aux | grep lambkin | sed -r '/kubectl/!d' | head -n1 | sed -r 's/.*?(\w{4}):\w{4}/\1/'
+else
+  ps aux | grep $1 | sed -r '/cloud_sql_proxy/!d' | head -n1 | sed 's/.*://'
+fi
