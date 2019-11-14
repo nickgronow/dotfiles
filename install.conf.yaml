@@ -1,0 +1,17 @@
+- defaults:
+    link:
+      relink: true
+- clean: ['~']
+
+- link:
+    ~/.tmux: tmux
+    ~/.tmux.conf: tmux/tmux.conf
+    ~/.bashrc: bashrc
+    ~/.bash_aliases: bash_aliases
+    ~/.dir_colors: dir_colors
+    ~/.gitconfig: gitconfig
+    ~/.gitignore_global: gitignore_global
+    ~/.irbrc: irbrc
+    ~/.psqlrc: psqlrc
+    ~/.ripgreprc: ripgreprc
+    ~/.inputrc: inputrc

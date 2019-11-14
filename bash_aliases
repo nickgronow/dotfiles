@@ -2,6 +2,7 @@
 if [ -x /usr/bin/dircolors ]; then
   test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
   alias ls='ls --color=auto'
+  alias lsa="ls -alhp"
   #alias dir='dir --color=auto'
   #alias vdir='vdir --color=auto'
 
@@ -24,14 +25,7 @@ alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo
 
 alias ep="vim ~/.bashrc"
 alias em="vim ~/.bash_aliases"
-alias ek="vim ~/.config/kitty/kitty.conf"
 alias rp=". ~/.bashrc"
-alias ei="vim ~/.config/i3/config"
-alias set-title="kitty @ set-window-title"
-alias vim="set-title nvim; nvim"
-alias sudo="sudo "
-
-alias lsa="ls -alhp"
 
 # Git
 alias gitst="git st"
@@ -41,22 +35,16 @@ alias cdl='cd !!:$:h'
 alias cdr='cd ~/.rbenv/versions/'
 
 # Quick directories
-NICK="/home/nick"
+NICK="~"
 alias cdn="cd $NICK"
-alias cdn="cd $NICK/notes"
 alias cdd="cd $NICK/dotfiles"
 alias cdp="cd $NICK/snippets"
-alias cdo="cd $NICK/notes"
-alias cdv="cd ~/.config/nvim"
 alias cdd="cd ~/Downloads"
 alias cdt="cd ~/tmp"
 
 # Sites
 SITES="$NICK/Sites"
 alias cds="cd $SITES"
-alias cdh="cd $SITES/homeward/www"
-alias cdk="cd $SITES/datekeeper/html"
-alias cdj="cd $SITES/johns/www/johns"
 
 # Calculator
 
@@ -66,43 +54,6 @@ bc << EOF
   $@
   quit
 EOF
-}
-
-# Global variables (through xdg runtime)
-get-global-var() {
-  if [ ! -f "${XDG_RUNTIME_DIR}/.$1" ]; then
-    echo $2
-  else
-    var=$(cat "${XDG_RUNTIME_DIR}/.$1")
-    echo ${var:-$2}
-  fi
-}
-set-global-var() {
-  printf "%s\n" $2 > "$XDG_RUNTIME_DIR/.$1"
-}
-
-# TODO: calculate spacing between answer and formula
-calc() {
-  local formula
-  local answer
-  echo -n "Answer: 0          Formula: "
-  while IFS= read -r -s -n 1 char
-  do
-    # Enter key
-    if [[ $char == $'\0' ]];     then
-        break
-    # Backspace key
-    elif [[ $char == $'\177' ]];  then
-        formula="${formula%?}"
-    # Normal character
-    else
-        formula+="$char"
-    fi
-    answer="$(echo $formula | bc 2>/dev/null)"
-    echo -ne "\rAnswer: $answer          Formula: $formula\033[K"
-  done
-  echo " "
-  echo "$formula = $answer"
 }
 
 # Pretty Path
@@ -213,9 +164,6 @@ z() {
   dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
 }
 
-# Helpers for copying easily to clipboard
-alias cpq="copyq copy -"
-
 # fe - Search for an email
 se() {
   copyq add "$(cat "$NICK/notes/contacts/emails.txt" | fzf +m)"
@@ -252,9 +200,6 @@ sr() {
 }
 
 
-# Disk usage
-alias dud="du -h -d1 | sort -h | tac"
-
 # Make snippet
 new-snippet() {
   local file="$NICK/snippets/$1"
@@ -273,127 +218,24 @@ alias clc='copy-last-command'
 # Bindings for fzf
 bind '"\C-o": "sh\n"'
 
-# Wellopp db connectivity
-wellopp() {
-  if [[ $@ == "start-db" ]]; then
-    command ssh -f wellopp-db -N
-  elif [[ $@ == "stop-db" ]]; then
-    command kill $(ps aux | grep wellopp-db | head -n1 | tr -s " " | cut -d " " -f2)
-  elif [[ $@ == "status-db" ]]; then
-    command ps aux | grep wellopp-db | head -n1
-  elif [[ $@ == "cloud" ]]; then
-    command cloud_sql_proxy -instances homeward-ops:us-east4:wellopp-postgres=tcp:5450
-  else
-    echo 'sub command not found'
-  fi
-}
-
-# Database connectivity
-get-db-port() {
-  current=$(get-global-var dbport)
-  port=${current:-5000}
-  next=$(($port+1))
-  set-global-var dbport $next
-  echo $next
-}
-
-db() {
-  if [[ $1 == "gcs" ]]; then
-    cloud_sql_proxy -dir /tmp/cloudsql
-  elif [[ $1 == "wov" ]]; then
-    kubectl port-forward --namespace default svc/harping-lambkin-postgresql $(get-db-port):5432
-  elif [[ $# != 2 ]]; then
-    echo "You need to supply {database-name} {start|stop|status}"
-  elif [[ $2 == "start" ]]; then
-    ssh -f "$1-db" -N
-  elif [[ $2 == "stop" ]]; then
-    kill $(ps aux | grep "$1-db" | sed '/grep/d' | head -n1 | tr -s " " | cut -d " " -f2)
-  elif [[ $2 == "status" ]]; then
-    ps aux | grep "$1-db" | head -n1
-  elif [[ $2 == "cloud" ]]; then
-    cloud_sql_proxy -instances "homeward-ops:us-central1:$1=tcp:$(get-db-port)"
-  else
-    echo 'sub command not found'
-  fi
-}
-
 # Wellopp psql connect
-psql() {
-  set-title psql
-  if [[ $@ =~ ^(cp|sb)(prod|qa)$ ]]; then
-    port="$(get-port-for $@)"
-    command psql -h localhost -p "$port" -U $@ $@
-  elif [[ $@ =~ ^dispatch-prod$ ]]; then
-    port="$(get-port-for $@)"
-    command psql -h localhost -p "$port" -U postgres dispatch
-  elif [ $@ == dashboard ]; then
-    command psql -h localhost -p 5486 -U dashboard dashboard
-  elif [[ $@ =~ ^dispatch-qa$ ]]; then
-    port="$(get-port-for $@)"
-    command psql -h localhost -p "$port" -U postgres dispatch
-  elif [[ $@ == 'lighthouse' ]]; then
-    port="$(get-port-for wov)"
-    command psql -h localhost -p "$port" -U postgres lighthouse
-  elif [[ $@ == 'cth' ]]; then
-    port="$(get-port-for wov)"
-    command psql -h localhost -p "$port" -U cthdb cthdb
-  elif [[ $@ == "jnprod" ]]; then
-    command psql -h localhost -p 5452 -U johns
-  elif [[ $@ == 'lhl' ]]; then
-    command psql -h localhost -p 5482 -U postgres lhl
-  elif [[ $@ == "mce" ]]; then
-    command psql -h localhost -p 5484 -U postgres mce
-  elif [[ $@ == "cth" ]]; then
-    command psql -h localhost -p 5485 -U postgres cth
-  elif [[ $@ == "mce-prod" ]]; then
-    port="$(get-port-for wov)"
-    command psql -h localhost -p "$port" -U mce mce
-  elif [[ $@ == "wov" ]]; then
-    port="$(get-port-for wov)"
-    command psql -h localhost -p "$port" -U postgres postgres
-  else
-    command psql -h localhost "$@"
-  fi
-}
-
-# Redis server
-alias redis-start='redis-server /etc/redis.conf &'
-alias redis-stop='kill $(ps aux | grep redis-server | head -n1 | tr -s " " | cut -d " " -f2)'
-
-# AG
-
-alias ag='ag --smart-case --pager="less -MIRFX"'
+# psql() {
+#   if [[ $@ =~ ^(a|b)(c|d)$ ]]; then
+#     psql -h localhost -p "$port" -U $@ $@
+#   elif [[ $@ == "text" ]]; then
+#     psql -h localhost -p "$port" -U mce mce
+#   else
+#     psql -h localhost "$@"
+#   fi
+# }
 
 # File sizes
 
 alias dud="du -h -d1 | sort -h | tac"
 
-# Calendar
-
-alias gcal="google-chrome --new-window calendar.google.com && exit"
-
-# SSH
-
-ssh-wellopp-key() {
-  cat "$NICK/snippets/homeward ssh key.txt" | copyq copy - > /dev/null
-  ssh-add ~/.ssh/wellopp
-}
-
 # Kubernetes
 
 alias k="kubectl"
-
-# Zoom
-
-alias zoom="QT_AUTO_SCREEN_SCALE_FACTOR=2 zoom"
-
-# Clementine
-
-alias clementine="QT_AUTO_SCREEN_SCALE_FACTOR=2 clementine"
-
-# Pandoc
-
-alias pandoc-to-html="pandoc -F mermaid-filter -s -c ~/.config/pandoc/markdown.css"
 
 # Rails
 alias rs="docker-compose exec web rails"
@@ -408,10 +250,6 @@ alias dkr="docker-compose run web"
 alias dke="docker-compose exec web"
 alias docker-remove-stopped-containers="docker ps -aq --no-trunc -f status=exited | xargs docker rm"
 
-# SSH
-
-alias ssh="kitty +kitten ssh"
-
 # Less
 alias less="less -R"
 
@@ -421,16 +259,5 @@ alias recent="ls -t | head -1"
 # Change ownership of files to me
 alias ownit="sudo chown -R nick:nick ."
 
-# Battery
-alias battery="upower -i /org/freedesktop/UPower/devices/battery_BAT0 | grep percentage"
-
 # FEH
 alias feh="feh --theme clean"
-
-# Open-faas
-alias faas-connect="kubectl port-forward svc/gateway -n openfaas 31112:8080"
-
-# Local npm binaries
-npr() {
-  "node_modules/.bin/$1"
-}
