@@ -54,12 +54,9 @@ esac
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
+        color_prompt=yes
     else
-	color_prompt=
+        color_prompt=
     fi
 fi
 
@@ -118,8 +115,7 @@ GIT_PROMPT_FETCH_REMOTE_STATUS=1 # fetch remote status
 GIT_PROMPT_SHOW_UPSTREAM= # show upstream tracking branch
 GIT_PROMPT_SHOW_UNTRACKED_FILES=all # can be no, normal or all; determines counting of untracked files
 GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=1 # print the number of changed files
-GIT_PROMPT_THEME=Nick_Ubuntu # use custom theme specified in file GIT_PROMPT_THEME_FILE (default ~/.git-prompt-colors.sh)
-GIT_PROMPT_THEME_FILE=~/.bash-git-theme.bgptheme
+GIT_PROMPT_THEME=Default_Ubuntu
 source ~/.bash-git-prompt/gitprompt.sh
 
 # Change to saved working dir
@@ -161,6 +157,9 @@ shopt -s histappend
 # NPM
 export PATH=~/.npm-global/bin:$PATH
 export PATH=~/.npm-packages/bin:$PATH
+
+# Personal bin executables
+export PATH=~/bin:$PATH
 
 # Ripgrep
 export RIPGREP_CONFIG_PATH=~/.config/ripgrep/ripgreprc

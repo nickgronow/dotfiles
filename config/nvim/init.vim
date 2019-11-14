@@ -80,6 +80,8 @@ set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+Plug 'chriskempson/base16-vim'
+
 " Vue syntax
 Plug 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
@@ -480,34 +482,7 @@ nnoremap <silent> <esc> :noh<return><esc>
 
 call plug#end()
 
-" colors (themes have to go outside the vim plug block)
-colorscheme monokai
-let g:terminal_color_0  = '#272822'
-let g:terminal_color_1  = '#f92672'
-let g:terminal_color_2  = '#a6e22e'
-let g:terminal_color_3  = '#f4bf75'
-let g:terminal_color_4  = '#66d9ef'
-let g:terminal_color_5  = '#ae81ff'
-let g:terminal_color_6  = '#a1efe4'
-let g:terminal_color_7  = '#f8f8f2'
-let g:terminal_color_8  = '#75715e'
-let g:terminal_color_9  = '#f92672'
-let g:terminal_color_10 = '#a6e22e'
-let g:terminal_color_11 = '#f4bf75'
-let g:terminal_color_12 = '#66d9ef'
-let g:terminal_color_13 = '#ae81ff'
-let g:terminal_color_14 = '#a1efe4'
-let g:terminal_color_15 = '#f9f8f5'
-hi Pmenu        guifg=fg guibg=#3E3D32
-hi PmenuSel     guifg=fg guibg=bg
-hi PmenuSbar    guibg=bg
-hi LineNr guibg=#272822
-hi Folded guibg=#272822
-hi SignColumn guibg=#272822
-hi MatchParen guibg=#88DBB3
-hi! EndOfBuffer ctermbg=bg ctermfg=bg guibg=bg guifg=bg
-set guicursor=n-v-c:block-Cursor,i-ci:ver25-Cursor/lCursor,r-cr:hor20-Cursor/lCursor
-highlight Cursor guibg=#AE81FF guifg=#F8F8F2
+colorscheme base16-default-dark
 
 " " Finally, some more autocomplete settings that need to happen outside the vim
 " " plug block:
