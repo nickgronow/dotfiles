@@ -16,7 +16,7 @@
   diff-file = diff -p --no-prefix -U1000
 [core]
   quotepath = false
-  excludesfile = /home/nick/.gitignore_global
+  excludesfile = ~/.gitignore_global
 [merge]
   tool = fugitive
 [push]
