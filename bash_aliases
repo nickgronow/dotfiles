@@ -35,7 +35,7 @@ alias cdl='cd !!:$:h'
 alias cdr='cd ~/.rbenv/versions/'
 
 # Quick directories
-NICK="~"
+NICK="$(realpath ~)"
 alias cdn="cd $NICK"
 alias cdd="cd $NICK/dotfiles"
 alias cdp="cd $NICK/snippets"
