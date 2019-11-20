@@ -79,6 +79,10 @@ set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Tmux navigation across vim panes
+Plug 'christoomey/vim-tmux-navigator'
+
+" Tomorrow night colors
 Plug 'chriskempson/base16-vim'
 
 " Vue syntax
