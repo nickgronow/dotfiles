@@ -13,6 +13,6 @@
     ~/.gitignore_global: gitignore_global
     ~/.irbrc: irbrc
     ~/.psqlrc: psqlrc
-    ~/.ripgreprc: ripgreprc
+    ~/.config/ripgrep/ripgreprc: ripgreprc
     ~/.inputrc: inputrc
     ~/.config/nvim: config/nvim
