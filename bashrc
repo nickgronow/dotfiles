@@ -129,6 +129,7 @@ export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 #       FZF
 # ================
 
+set -o vi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Colors

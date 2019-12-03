@@ -24,9 +24,11 @@ set-option -g status-justify left
 set-option -g status-right-length 40
 set-option -g status-right ''
 
-# Pane border
-set-option -g pane-border-style bg=default,fg=black
-set-option -g pane-active-border-style bg=default,fg=white
+# Pane style
+set-option -g pane-border-style 'bg=default,fg=white'
+set-option -g pane-active-border-style 'bg=default,fg=colour39'
+set-option -g window-style 'bg=colour234,fg=white'
+set-option -g window-active-style 'bg=colour233,fg=white'
 
 # Pane number indicator
 set-option -g display-panes-colour brightblack
