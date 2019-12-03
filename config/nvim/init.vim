@@ -197,7 +197,7 @@ Plug 'vim-airline/vim-airline-themes'
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
 let g:airline#extensions#tagbar#enabled = 1
-let g:airline#extensions#fugitiveline#enabled = 1
+let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 1
@@ -527,6 +527,12 @@ com! FormatJSON %!python -m json.tool
 " Add autocomplete dictionary if it exists
 if filereadable(".vim-dictionary")
   set dictionary+=.vim-dictionary
+endif
+
+" Vimdiff color scheme
+if &diff
+  colorscheme jellybeans
+  set nocursorline
 endif
 
 source ~/.config/nvim/mappings.vim
