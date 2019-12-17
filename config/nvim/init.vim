@@ -75,6 +75,7 @@ autocmd VimEnter *
       \| endif
 
 " Key timing
+set timeout
 set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
@@ -200,7 +201,7 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#ale#enabled = 1
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
 let g:airline_theme='badwolf'
 
