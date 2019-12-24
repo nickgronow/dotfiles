@@ -16,4 +16,5 @@
     ~/.psqlrc: psqlrc
     ~/.config/ripgrep/ripgreprc: ripgreprc
     ~/.inputrc: inputrc
+    ~/.editrc: editrc
     ~/.config/nvim: config/nvim
