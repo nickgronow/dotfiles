@@ -23,9 +23,6 @@ esac
 # See bash(1) for more options
 export HISTCONTROL=ignoreboth
 
-# append to the history file, don't overwrite it
-shopt -s histappend
-
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
 export HISTSIZE=10000
 export HISTFILESIZE=20000
@@ -151,7 +148,7 @@ export FZF_COMPLETION_OPTS='+c -x'
 shopt -s histappend
 
 # Append commands immediately instead of when terminal is closed
-# export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
+export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Kubernetes
 
