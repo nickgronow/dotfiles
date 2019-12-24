@@ -486,12 +486,6 @@ nnoremap <silent> <esc> :noh<return><esc>
 
 call plug#end()
 
-set background=dark
-set t_Co=256
-set termguicolors
-let base16colorspace=256
-colorscheme base16-default-dark
-
 " " Finally, some more autocomplete settings that need to happen outside the vim
 " " plug block:
 " let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -529,6 +523,15 @@ com! FormatJSON %!python -m json.tool
 if filereadable(".vim-dictionary")
   set dictionary+=.vim-dictionary
 endif
+
+" Coloring
+
+set background=dark
+set t_Co=256
+set termguicolors
+let base16colorspace=256
+colorscheme base16-default-dark
+hi Normal guibg=NONE ctermbg=NONE
 
 " Vimdiff color scheme
 if &diff
