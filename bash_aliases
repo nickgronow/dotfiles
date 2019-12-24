@@ -246,8 +246,8 @@ alias rc="docker-compose exec web rspec"
 # Docker & Docker-compose
 
 alias dkc="docker-compose"
-alias dkr="docker-compose run web"
-alias dke="docker-compose exec web"
+alias dkr="docker-compose run app"
+alias dke="docker-compose exec app"
 alias docker-remove-stopped-containers="docker ps -aq --no-trunc -f status=exited | xargs docker rm"
 
 # Less
