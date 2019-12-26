@@ -26,8 +26,10 @@ bind-key -T copy-mode-vi Escape send-keys -X cancel
 bind-key -T copy-mode-vi C-c send-keys -X clear-selection
 
 # Moving around
-bind-key -T copy-mode-vi H send-keys -X start-of-line q
+bind-key -T copy-mode-vi H send-keys -X start-of-line
+bind-key -T copy-mode-vi 0 send-keys -X start-of-line
 bind-key -T copy-mode-vi L send-keys -X end-of-line
+bind-key -T copy-mode-vi "\$" send-keys -X end-of-line
 bind-key -T copy-mode-vi w send-keys -X next-word
 bind-key -T copy-mode-vi W send-keys -X next-space
 bind-key -T copy-mode-vi b send-keys -X previous-word
