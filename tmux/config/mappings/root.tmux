@@ -44,6 +44,6 @@ bind-key -T root M-5 select-window -t:5
 bind-key -T root M-6 select-window -t:6
 bind-key -T root M-7 select-window -t:7
 bind-key -T root M-8 select-window -t:8
-bind-key -T root M-9 select-window -t:9
-bind-key -T root M-0 select-window -t:"\$"
+bind-key -T root M-9 select-window -t:"\$"
+bind-key -T root M-0 select-window -t:!
 bind-key -T root M-- select-window -t:!
