@@ -238,10 +238,9 @@ alias dud="du -h -d1 | sort -h | tac"
 alias k="kubectl"
 
 # Rails
-alias rs="docker-compose exec web rails"
-alias rk="docker-compose exec web rake"
-alias bi="docker-compose exec web bundle install"
-alias rc="docker-compose exec web rspec"
+alias rs="bin/rails"
+alias rk="bin/rake"
+alias bi="bundle"
 
 # Docker & Docker-compose
 
