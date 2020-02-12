@@ -50,7 +50,8 @@ bind-key -T prefix t clock-mode
 bind-key -T prefix w choose-tree -w
 
 # Prefix alternates for root bindings.
-bind-key -T prefix h select-pane -L
+# bind-key -T prefix h select-pane -L
+bind-key -T prefix h split-window -v -c '#{pane_current_path}'
 bind-key -T prefix j select-pane -D
 bind-key -T prefix k select-pane -U
 bind-key -T prefix l select-pane -R
@@ -61,7 +62,8 @@ bind-key -T prefix H resize-pane -L 2
 bind-key -T prefix J resize-pane -D 1
 bind-key -T prefix K resize-pane -U 1
 bind-key -T prefix L resize-pane -R 2
-bind-key -T prefix v copy-mode
+# bind-key -T prefix v copy-mode
+bind-key -T prefix v split-window -h -c '#{pane_current_path}'
 
 # Layouts
 bind-key -T prefix space next-layout
