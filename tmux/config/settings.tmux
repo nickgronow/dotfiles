@@ -19,6 +19,7 @@ set-option -g status-keys vi
 
 # Mouse support.
 set-option -g mouse on
+setw -g mouse on
 
 # Time in milliseconds for which tmux waits after an escape.
 set-option -g escape-time 0
