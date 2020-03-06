@@ -69,6 +69,7 @@ if ! shopt -oq posix; then
 fi
 
 # Default editors
+set -o vi
 export EDITOR='vim'
 export VISUAL='vim'
 
@@ -115,18 +116,10 @@ GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=1 # print the number of changed files
 GIT_PROMPT_THEME=Default_Ubuntu
 source ~/.bash-git-prompt/gitprompt.sh
 
-# Change to saved working dir
-[[ -f "${XDG_RUNTIME_DIR}/.cwd" ]] && cd "$(< ${XDG_RUNTIME_DIR}/.cwd)"
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-
 # ================
 #       FZF
 # ================
 
-set -o vi
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
 # Colors
@@ -190,3 +183,9 @@ fi
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
+# Kubectl, kubectx, and kubens
+export PATH=~/.kubectx:$PATH
+source <(kubectl completion bash)
+alias k=kubectl
+complete -F __start_kubectl k

@@ -35,7 +35,7 @@ alias cdl='cd !!:$:h'
 alias cdr='cd ~/.rbenv/versions/'
 
 # Quick directories
-NICK="$(realpath ~)"
+NICK="$(realpath ~/me)"
 alias cdn="cd $NICK"
 alias cdd="cd $NICK/dotfiles"
 alias cdp="cd $NICK/snippets"
@@ -214,20 +214,10 @@ copy-last-command() {
   copyq add "$cmd"
 }
 alias clc='copy-last-command'
+alias cpq="copyq copy -"
 
 # Bindings for fzf
 bind '"\C-o": "sh\n"'
-
-# Wellopp psql connect
-# psql() {
-#   if [[ $@ =~ ^(a|b)(c|d)$ ]]; then
-#     psql -h localhost -p "$port" -U $@ $@
-#   elif [[ $@ == "text" ]]; then
-#     psql -h localhost -p "$port" -U mce mce
-#   else
-#     psql -h localhost "$@"
-#   fi
-# }
 
 # File sizes
 
@@ -236,6 +226,39 @@ alias dud="du -h -d1 | sort -h | tac"
 # Kubernetes
 
 alias k="kubectl"
+
+function krun() {
+  local app=$1
+  shift
+  local container=$1
+  shift
+  local command=$@
+  if [ -z $app ]; then
+    printf "Must provide an app name\nWill be used as -l app=<name>\n"
+    return 1
+  fi
+  local pod="$(kubectl get pods -l app=$app -o name | sed 's|pod/||' | head -n1)"
+  if [ -z $pod ]; then
+    echo "No pod found with a label of app=$1"
+    return 1
+  fi
+  if [ -z $container ]; then
+    $container=rails
+  fi
+  if [ -z "$command" ]; then
+    $command=bash
+  fi
+  kubectl exec -it $pod -c $container $command
+}
+function krails() {
+  krun $1 "${2-rails}" rails c
+}
+function kbash() {
+  krun $1 "${2-rails}" bash
+}
+function klogs() {
+  krun $1 "${2-rails}" logs --tail 100
+}
 
 # Rails
 alias rs="bin/rails"
@@ -260,3 +283,33 @@ alias ownit="sudo chown -R nick:nick ."
 
 # FEH
 alias feh="feh --theme clean"
+
+# WOV
+db() {
+  kubectl port-forward svc/postgres-12-postgresql ${1:-4000}:5432
+}
+psql() {
+  local OPTIND
+  local host=localhost
+  local port=4000
+  local user=postgres
+  while getopts "h:p:U:" opt; do
+    case "${opt}" in
+      h )
+        host=$OPTARG
+        ;;
+      p )
+        port=$OPTARG
+        ;;
+      U )
+        user=$OPTARG
+    esac
+  done
+  shift $((OPTIND -1))
+  if [ -z $user ]; then
+    for last; do true; done
+    user=$last
+  fi
+  echo "Running: psql -h $host -p $port -U $user $@"
+  command psql -h $host -p $port -U $user $@
+}

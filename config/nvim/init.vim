@@ -542,4 +542,4 @@ endif
 source ~/.config/nvim/mappings.vim
 
 " Open files
-com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "**/node_modules*" ! -path "./db*" ! -path "./.git/*"', 'sink': 'e'})
+com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "./db*" ! -path "./.git/*"', 'sink': 'e'})
