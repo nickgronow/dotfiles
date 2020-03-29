@@ -19,6 +19,8 @@ bind-key -n C-\ if-shell "$is_vim" "send-keys C-\\" "select-pane -l"
 # Switch windows.
 bind-key -T root M-p select-window -t :- # Previous window.
 bind-key -T root M-n select-window -t :+ # Next window.
+bind-key -T root M-[ select-window -t :- # Previous window.
+bind-key -T root M-] select-window -t :+ # Next window.
 
 # Toggle zoom.
 bind-key -T root M-f resize-pane -Z
