@@ -1,5 +1,7 @@
 # General layout options
-bind-key -T prefix i run-shell '~/.tmux/scripts/resize-adaptable.sh -p 60 -l main-vertical'
+bind-key -T prefix i run-shell '~/.tmux/scripts/resize-adaptable.sh -p 50 -l main-vertical'
+bind-key -T root M-i select-layout even-horizontal
+bind-key -T root M-s select-layout even-vertical
 
 # newsboat
 bind-key -n M-N \
