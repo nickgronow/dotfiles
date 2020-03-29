@@ -9,6 +9,7 @@ web:*.{html,css,js}*
 --glob=!git/*
 --glob=!tags
 --glob=!node_modules/*
+--glob=!dist/*
 
 # or
 --glob
