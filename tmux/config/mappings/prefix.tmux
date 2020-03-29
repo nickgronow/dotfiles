@@ -7,7 +7,8 @@ bind-key -T prefix r \
 	display-message ' (!) ~/.tmux/tmux.conf reloaded.'
 
 # Name panes
-bind-key -T prefix e command-prompt -I "#W" "rename-window '%%'"
+# bind-key -T prefix e command-prompt -I "#W" "rename-window '%%'" # Prefill with current name
+bind-key -T prefix e command-prompt -I "" "rename-window '%%'" # Rename with no prefill
 
 # Split pane with same directory.
 bind-key -T prefix - split-window -v -c '#{pane_current_path}'
