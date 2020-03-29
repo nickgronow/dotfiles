@@ -145,9 +145,12 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 
 # Kubernetes
 
+# Yarn
+export PATH="$PATH:$(yarn global bin)"
+
 # NPM
-export PATH=~/.npm-global/bin:$PATH
-export PATH=~/.npm-packages/bin:$PATH
+# export PATH=~/.npm-global/bin:$PATH
+# export PATH=~/.npm-packages/bin:$PATH
 
 # Personal bin executables
 export PATH=~/bin:$PATH

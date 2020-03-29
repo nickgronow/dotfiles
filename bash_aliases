@@ -260,17 +260,22 @@ function klogs() {
   krun $1 "${2-rails}" logs --tail 100
 }
 
-# Rails
-alias rs="bin/rails"
-alias rk="bin/rake"
-alias bi="bundle"
-
 # Docker & Docker-compose
 
-alias dkc="docker-compose"
-alias dkr="docker-compose run app"
-alias dke="docker-compose exec app"
 alias docker-remove-stopped-containers="docker ps -aq --no-trunc -f status=exited | xargs docker rm"
+
+dc="docker-compose"
+dke="$dc exec app"
+
+alias dkc="$dc"
+alias dkr="$dc run app"
+alias dke="$dc exec app"
+
+# Rails
+
+alias rs="$dke rails"
+alias rk="$dke rake"
+alias bi="$dke bundle"
 
 # Less
 alias less="less -R"
@@ -292,7 +297,7 @@ psql() {
   local OPTIND
   local host=localhost
   local port=4000
-  local user=postgres
+  local user
   while getopts "h:p:U:" opt; do
     case "${opt}" in
       h )
