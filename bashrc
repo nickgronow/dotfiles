@@ -1,8 +1,3 @@
-# Set PATH so it includes node modules if any exists
-#if [ -d "$HOME/.npm-global/bin" ] ; then
-    #PATH="$HOME/.npm-global/bin:$PATH"
-#fi
-
 # Pip installs commands to the .local/bin directory
 PATH="$HOME/.local/bin:$PATH"
 
@@ -148,10 +143,6 @@ export PROMPT_COMMAND="history -a; history -c; history -r; $PROMPT_COMMAND"
 # Yarn
 export PATH="$PATH:$(yarn global bin)"
 
-# NPM
-# export PATH=~/.npm-global/bin:$PATH
-# export PATH=~/.npm-packages/bin:$PATH
-
 # Personal bin executables
 export PATH=~/bin:$PATH
 
@@ -183,12 +174,23 @@ fi
 
 # NVM
 
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# Disabling for now because it SLOWS down load time
+
+# export NVM_DIR="$HOME/.nvm"
+# [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+# [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # Kubectl, kubectx, and kubens
 export PATH=~/.kubectx:$PATH
 source <(kubectl completion bash)
 alias k=kubectl
 complete -F __start_kubectl k
+
+# The next line updates PATH for the Google Cloud SDK.
+if [ -f '/home/nick/Downloads/google-cloud-sdk/path.bash.inc' ]; then . '/home/nick/Downloads/google-cloud-sdk/path.bash.inc'; fi
+
+# The next line enables shell command completion for gcloud.
+if [ -f '/home/nick/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/home/nick/Downloads/google-cloud-sdk/completion.bash.inc'; fi
+
+# Openfaas
+export OPENFAAS_URL=http://127.0.0.1:31112

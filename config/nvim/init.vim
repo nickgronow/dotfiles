@@ -25,7 +25,7 @@ set rnu
 " Insert spaces when TAB is pressed.
 set expandtab
 " Render TABs using this many spaces.
-set tabstop=2
+set softtabstop=2
 " Indentation amount for < and > commands.
 set shiftwidth=2
 " Horizontal split below current.
@@ -68,6 +68,9 @@ set autoindent " might not want this in the future, up to you
 " This setting must be set before ALE is loaded.
 let g:ale_completion_enabled = 0
 
+" Python
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
+
 " Run PlugInstall if there's missing plugins
 autocmd VimEnter *
       \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
@@ -101,8 +104,6 @@ Plug 'junegunn/fzf.vim'
 " Docker
 Plug 'ekalinin/Dockerfile.vim'
 
-" sleuth is way better then detect indent
-Plug 'tpope/vim-sleuth'
 Plug 'haya14busa/incsearch.vim'
 " tpopes vim-commentary better then nerdcommentor. All it is is just the gc
 " command.
@@ -244,7 +245,8 @@ let g:rg_highlight = 1
 " register) and you'll get a visual representation of the available registers
 Plug 'junegunn/vim-peekaboo'
 
-Plug 'w0rp/ale'
+Plug 'dense-analysis/ale'
+let g:ale_linters = {'gql': ['eslint'] }
 " Ale is the best plugin out there for linting... look into it: https://github.com/w0rp/ale
 " let g:ale_fixers = {
 " \   '*': ['remove_trailing_lines', 'trim_whitespace'],
@@ -542,4 +544,4 @@ endif
 source ~/.config/nvim/mappings.vim
 
 " Open files
-com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "./db*" ! -path "./.git/*" ! -path "dist"' , 'sink': 'e'})
+com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./coverage/*" ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "**/migrations*" ! -path "./.git/*" ! -path "./dist/*"' , 'sink': 'e'})

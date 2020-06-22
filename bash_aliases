@@ -264,6 +264,10 @@ function klogs() {
 
 alias docker-remove-stopped-containers="docker ps -aq --no-trunc -f status=exited | xargs docker rm"
 
+function docker-delete-images-by-name() {
+  docker images | grep "$1" | tr -s ' ' | cut -d' ' -f1,2 | sed 's/ /:/' | xargs docker rmi
+}
+
 dc="docker-compose"
 dke="$dc exec app"
 
@@ -317,4 +321,30 @@ psql() {
   fi
   echo "Running: psql -h $host -p $port -U $user $@"
   command psql -h $host -p $port -U $user $@
+}
+
+# Docker containers
+alias rb='docker run -it --rm -v `pwd`:/usr/src/app -e RUBY_ENV=test ruby-tester ruby'
+function drb() {
+  docker run -it --rm -v `pwd`:/home/app/function -e RUBY_ENV=${3-test} $1 ruby $2
+}
+function _drb_completions() {
+  COMPREPLY=($(compgen -W "$(docker images | tr -s ' ' | cut -d' ' -f1,2 | sed 's/ /:/')" "${COMP_WORDS[1]}"))
+}
+complete -F _drb_completions drb
+
+alias py='docker run -it --rm -v "$PWD":/usr/src/app --network host --env TESTING=true python-cli python'
+
+# Openfaas
+# secret="$(get-blessing-others-admin-secret)"
+alias get-blessing-others-admin-secret="secret=$(k get secrets blessing-secrets -o json | jq -r '.data["admin-secret"]' | base64 --decode -)"
+
+# faas-retry domain event-id admin-secret
+function faas-retry() {
+  curl --request POST\
+    --header "Content-Type: application/json"\
+    --header "X-Hasura-Role: admin"\
+    --header "X-Hasura-Admin-Secret: $3"\
+    --data "{\"type\": \"redeliver_event\", \"args\": {\"event_id\": \"$2\"}}"\
+    "https:/$1/v1/query"
 }
