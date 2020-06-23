@@ -67,3 +67,9 @@
 	path = dotbot
 	url = https://github.com/anishathalye/dotbot
 	ignore = dirty
+[submodule "tmux/plugins/tmux-fzf"]
+	path = tmux/plugins/tmux-fzf
+	url = https://github.com/sainnhe/tmux-fzf
+[submodule "tmux/plugins/tpm"]
+	path = tmux/plugins/tpm
+	url = https://github.com/tmux-plugins/tpm
