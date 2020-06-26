@@ -18,8 +18,7 @@
   quotepath = false
   excludesfile = ~/.gitignore_global
 [merge]
-  tool = vimdiff
-  conflictstyle = diff3
+  tool = nvim
 [push]
   default = upstream
 [color]
@@ -30,8 +29,8 @@
   ui = true
 [mergetool]
   prompt = false
-  keepBackup = false
-  trustExitCode = true
+[mergetool "nvim"]
+  cmd = nvim -f -c \"Gdiffsplit!\" \"$MERGED\"
 [log]
   date = format-local:%m/%d/%y %l:%M%p
 [diff]
