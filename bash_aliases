@@ -24,38 +24,16 @@ alias l='ls -CF'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 alias vim=nvim
-alias ep="vim ~/.bashrc"
-alias em="vim ~/.bash_aliases"
+alias ep="nvim ~/.bashrc"
+alias em="nvim ~/.bash_aliases"
 alias rp=". ~/.bashrc"
 
 # Git
 alias gitst="git st"
 
-# Useful cd tools
-alias cdl='cd !!:$:h'
-alias cdr='cd ~/.rbenv/versions/'
-
 # Quick directories
 NICK="$(realpath ~/me)"
-alias cdn="cd $NICK"
-alias cdd="cd $NICK/dotfiles"
 alias cdp="cd $NICK/snippets"
-alias cdd="cd ~/Downloads"
-alias cdt="cd ~/tmp"
-
-# Sites
-SITES="$NICK/Sites"
-alias cds="cd $SITES"
-
-# Calculator
-
-=() {
-bc << EOF
-  scale=4
-  $@
-  quit
-EOF
-}
 
 # Pretty Path
 
@@ -78,19 +56,6 @@ vimclean() {
 
 # FZF
 
-# cd - including hidden directories
-sda() {
-  local dir
-  dir=$(find ${1:-.} -type d 2> /dev/null | fzf +m) && cd "$dir"
-}
-
-# cdf - cd into the directory of the selected file
-sdf() {
-   local file
-   local dir
-   file=$(fzf +m -q "$1") && dir=$(dirname "$file") && cd "$dir"
-}
-
 # fh - repeat history
 runcmd (){ perl -e 'ioctl STDOUT, 0x5412, $_ for split //, <>' ; }
 
@@ -100,10 +65,6 @@ shist() {
 
 # fhe - repeat history edit
 writecmd (){ perl -e 'ioctl STDOUT, 0x5412, $_ for split //, do{ chomp($_ = <>); $_ }' ; }
-
-she() {
-  ([ -n "$ZSH_NAME" ] && fc -l 1 || history) | fzf +s --tac | sed -re 's/^\s*[0-9]+\s*//' | writecmd
-}
 
 # fkill - kill process
 fkill() {
@@ -165,16 +126,11 @@ z() {
   dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
 }
 
-# fe - Search for an email
-se() {
-  copyq add "$(cat "$NICK/notes/contacts/emails.txt" | fzf +m)"
-}
-
 # fs - Search for a snippet
 sp() {
   local file
   file=$(find "$NICK/snippets" -printf "%f\n" 2> /dev/null | fzf +m) &&
-  cat "$NICK/snippets/$file" | copyq copy -
+  cat "$NICK/snippets/$file" | copyq add - && copyq select 0
 }
 spe() {
   local file
@@ -184,7 +140,6 @@ spe() {
 spr() {
   local file=$(find "$NICK/snippets" -printf "%f\n" 2> /dev/null | fzf +m)
   local cmd=$(cat "$NICK/snippets/$file")
-  echo "$cmd"
   eval "$cmd"
 }
 
@@ -215,7 +170,7 @@ copy-last-command() {
   copyq add "$cmd"
 }
 alias clc='copy-last-command'
-alias cpq="copyq copy -"
+alias cpq="copyq add - && copyq select 0"
 
 # Bindings for fzf
 bind '"\C-o": "sh\n"'
@@ -262,6 +217,8 @@ function klogs() {
 }
 
 # Docker & Docker-compose
+dc="docker-compose"
+dke="$dc exec app"
 
 alias docker-remove-stopped-containers="docker ps -aq --no-trunc -f status=exited | xargs docker rm"
 
@@ -269,15 +226,11 @@ function docker-delete-images-by-name() {
   docker images | grep "$1" | tr -s ' ' | cut -d' ' -f1,2 | sed 's/ /:/' | xargs docker rmi
 }
 
-dc="docker-compose"
-dke="$dc exec app"
-
 alias dkc="$dc"
 alias dkr="$dc run app"
 alias dke="$dc exec app"
 
-# Rails
-
+# Rails & docker-compose
 alias rs="$dke rails"
 alias rk="$dke rake"
 alias bi="$dke bundle"
@@ -289,65 +242,21 @@ alias less="less -R"
 alias recent="ls -t | head -1"
 
 # Change ownership of files to me
-alias ownit="sudo chown -R nick:nick ."
-
-# FEH
-alias feh="feh --theme clean"
-
-# WOV
-db() {
-  kubectl port-forward svc/postgres-12-postgresql ${1:-4000}:5432
-}
-psql() {
-  local OPTIND
-  local host=localhost
-  local port=4000
-  local user
-  while getopts "h:p:U:" opt; do
-    case "${opt}" in
-      h )
-        host=$OPTARG
-        ;;
-      p )
-        port=$OPTARG
-        ;;
-      U )
-        user=$OPTARG
-    esac
-  done
-  shift $((OPTIND -1))
-  if [ -z $user ]; then
-    for last; do true; done
-    user=$last
-  fi
-  echo "Running: psql -h $host -p $port -U $user $@"
-  command psql -h $host -p $port -U $user $@
-}
+alias ownit="sudo chown -R $(whoami):$(whoami) ."
 
 # Docker containers
-alias rb='docker run -it --rm -v `pwd`:/usr/src/app -e RUBY_ENV=test ruby-tester ruby'
-function drb() {
-  docker run -it --rm -v `pwd`:/home/app/function -e RUBY_ENV=${3-test} $1 ruby $2
-}
-function _drb_completions() {
-  COMPREPLY=($(compgen -W "$(docker images | tr -s ' ' | cut -d' ' -f1,2 | sed 's/ /:/')" "${COMP_WORDS[1]}"))
-}
-complete -F _drb_completions drb
-
 alias py='docker run -it --rm -v "$PWD":/usr/src/app --network host --env TESTING=true python-cli python'
 
-# Openfaas
-# secret="$(get-blessing-others-admin-secret)"
-function get-blessing-others-admin-secret() {
-  secret="$(k get secrets blessing-secrets -o json | jq -r '.data["admin-secret"]' | base64 --decode -)"
-}
-
-# faas-retry domain event-id admin-secret
-function faas-retry() {
-  curl --request POST\
-    --header "Content-Type: application/json"\
-    --header "X-Hasura-Role: admin"\
-    --header "X-Hasura-Admin-Secret: $3"\
-    --data "{\"type\": \"redeliver_event\", \"args\": {\"event_id\": \"$2\"}}"\
-    "https:/$1/v1/query"
+# Run snippets like a command
+r() {
+  if [ -z $1 ]; then
+    printf "r [command]\n\nRun a snippet as a bash script supplying the name of the snippet.  It must have execution permissions, and have a '.sh' file extension.\n\nExample: 'r test' will run the bash script located at '[SNIPPET_PATH]/test.sh'.\n"
+    return
+  fi
+  local file="$NICK/snippets/$1.sh"
+  if [ ! -f "$file" ]; then
+    echo "$1 command was not found at: $file"
+    return
+  fi
+  "$file"
 }
