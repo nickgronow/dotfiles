@@ -204,7 +204,7 @@ let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='badwolf'
+" let g:airline_theme='badwolf'
 
 " Highlight colors in any buffer
 Plug 'ap/vim-css-color'
@@ -245,7 +245,7 @@ let g:rg_highlight = 1
 " register) and you'll get a visual representation of the available registers
 Plug 'junegunn/vim-peekaboo'
 
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
 let g:ale_linters = {'gql': ['eslint'] }
 " Ale is the best plugin out there for linting... look into it: https://github.com/w0rp/ale
 " let g:ale_fixers = {
@@ -485,6 +485,9 @@ nnoremap <silent> ( 0
 
 " hit escape to remove highlighting from incremental search
 nnoremap <silent> <esc> :noh<return><esc>
+
+" LSP support
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 call plug#end()
 

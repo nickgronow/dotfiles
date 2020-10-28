@@ -25,3 +25,4 @@ tags.lock
 .rbenv-gemsets
 .vim-dictionary
 bin/start
+.vim

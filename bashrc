@@ -1,3 +1,8 @@
+# Profiling
+# PS4='+ $(date "+%s.%N")\011 '
+# exec 3>&2 2>/tmp/bashstart.$$.log
+# set -x
+
 # Pip installs commands to the .local/bin directory
 PATH="$HOME/.local/bin:$PATH"
 
@@ -130,7 +135,7 @@ export FZF_COMPLETION_TRIGGER='**'
 export FZF_COMPLETION_OPTS='+c -x'
 
 # Use ripgrep
-# export FZF_DEFAULT_COMMAND='rg'
+export FZF_DEFAULT_COMMAND='rg'
 
 # Append history instead of overwrite
 shopt -s histappend
@@ -194,3 +199,7 @@ if [ -f '/home/nick/Downloads/google-cloud-sdk/completion.bash.inc' ]; then . '/
 
 # Openfaas
 export OPENFAAS_URL=http://127.0.0.1:31112
+
+# Profiling
+# set +x
+# exec 2>&3 3>&-

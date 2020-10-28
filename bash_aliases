@@ -23,6 +23,7 @@ alias l='ls -CF'
 #   sleep 10; alert
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
+alias vim=nvim
 alias ep="vim ~/.bashrc"
 alias em="vim ~/.bash_aliases"
 alias rp=". ~/.bashrc"
@@ -337,7 +338,9 @@ alias py='docker run -it --rm -v "$PWD":/usr/src/app --network host --env TESTIN
 
 # Openfaas
 # secret="$(get-blessing-others-admin-secret)"
-alias get-blessing-others-admin-secret="secret=$(k get secrets blessing-secrets -o json | jq -r '.data["admin-secret"]' | base64 --decode -)"
+function get-blessing-others-admin-secret() {
+  secret="$(k get secrets blessing-secrets -o json | jq -r '.data["admin-secret"]' | base64 --decode -)"
+}
 
 # faas-retry domain event-id admin-secret
 function faas-retry() {

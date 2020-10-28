@@ -129,3 +129,21 @@ vmap <leader>c :Commentary<CR>
 
 " Split by commas
 vnoremap <leader>, :s/\v\s+(\w+)(,\|\n)/\r\1\2/g<cr>
+
+" COC LSP
+" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+" nmap <leader>r <Plug>(coc-rename)
+if has('nvim')
+  inoremap <silent><expr> <c-c> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+nmap <leader>s <Plug>(coc-codeaction)
+nmap <leader>S <Plug>(coc-fix-current)
+nmap <silent> <leader>a <Plug>(coc-diagnostic-next-error)
+nmap <silent> <leader>A <Plug>(coc-diagnostic-next)
+nmap <silent> <leader>d <Plug>(coc-definition)
+nmap <silent> <leader>D <Plug>(coc-implementation)
+nmap <silent> <leader>t <Plug>(coc-type-definition)
+nmap <silent> <leader>u <Plug>(coc-references)
+nmap <silent> <leader>p <Plug>(coc-format)
