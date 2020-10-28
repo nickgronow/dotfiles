@@ -250,13 +250,25 @@ alias py='docker run -it --rm -v "$PWD":/usr/src/app --network host --env TESTIN
 # Run snippets like a command
 r() {
   if [ -z $1 ]; then
-    printf "r [command]\n\nRun a snippet as a bash script supplying the name of the snippet.  It must have execution permissions, and have a '.sh' file extension.\n\nExample: 'r test' will run the bash script located at '[SNIPPET_PATH]/test.sh'.\n"
+    printf "r [command]\n\nRun a bash script supplying the name of the script, without the file extension.  It must have execution permissions, and have a '.sh' file extension.\n\nExample: 'r test' will run the bash script located at '[SCRIPT_PATH]/test.sh'.\n"
     return
   fi
-  local file="$NICK/snippets/$1.sh"
+  local file="$NICK/scripts/$1.sh"
   if [ ! -f "$file" ]; then
     echo "$1 command was not found at: $file"
     return
   fi
   "$file"
+}
+re() {
+  if [ -z $1 ]; then
+    printf "re [command]\n\nEdit a command that the 'r' command runs."
+    return
+  fi
+  local file="$NICK/scripts/$1.sh"
+  if [ ! -f "$file" ]; then
+    echo "$1 command was not found at: $file"
+    return
+  fi
+  nvim "$file"
 }
