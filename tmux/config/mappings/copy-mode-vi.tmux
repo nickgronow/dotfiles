@@ -11,7 +11,7 @@ bind-key -T copy-mode-vi C-v send-keys -X rectangle-toggle
 bind-key -T copy-mode-vi o send-keys -X other-end
 
 # Copy
-bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'xclip -i -selection clipboard' # Copy to system clipboard.
+bind-key -T copy-mode-vi y send-keys -X copy-pipe-and-cancel 'copyq copy -' # Copy to system clipboard.
 
 # Search
 bind-key -T copy-mode-vi ? command-prompt -i -p '?' 'send-keys -X search-forward-incremental "%%%"'

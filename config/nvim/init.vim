@@ -89,6 +89,9 @@ Plug 'christoomey/vim-tmux-navigator'
 " Tomorrow night colors
 Plug 'chriskempson/base16-vim'
 
+" jellybeans
+Plug 'nanotech/jellybeans.vim'
+
 " Vue syntax
 Plug 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
@@ -193,18 +196,19 @@ au TermOpen * setlocal nonumber norelativenumber
 " buffer contains unsaved changes, you'll be prompted on what to do.
 
 " Airline
+Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-" let g:airline_section_z = "%p%% - %l/%L"
+let g:airline_section_b = "%p%% - %l/%L"
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tagbar#flags = 'f'  " show full tag hierarchy
 let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
-" let g:airline_theme='badwolf'
 
 " Highlight colors in any buffer
 Plug 'ap/vim-css-color'
@@ -524,6 +528,9 @@ endfunction"}}}
 " JSON formatter
 com! FormatJSON %!python -m json.tool
 
+" SQL formatter
+com! FormatSql execute '%!sqlformat --reindent --keywords upper --identifiers lower -' | set ft=sql
+
 " Add autocomplete dictionary if it exists
 if filereadable(".vim-dictionary")
   set dictionary+=.vim-dictionary
@@ -548,3 +555,17 @@ source ~/.config/nvim/mappings.vim
 
 " Open files
 com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./coverage/*" ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "**/migrations*" ! -path "./.git/*" ! -path "./dist/*"' , 'sink': 'e'})
+
+" Buffers
+function! GetActiveBuffers()
+    let l:blist = getbufinfo({'bufloaded': 1, 'buflisted': 1})
+    let l:result = []
+    for l:item in l:blist
+        "skip unnamed buffers; also skip hidden buffers?
+        if empty(l:item.name)
+            continue
+        endif
+        call add(l:result, shellescape(l:item.name))
+    endfor
+    return join(l:result)
+endfunction
