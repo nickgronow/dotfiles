@@ -180,11 +180,13 @@ if [ -f ~/.bash_custom ]; then
   . ~/.bash_custom
 fi
 
-# Kubectl, kubectx, and kubens
-export PATH=~/.kubectx:$PATH
-source <(kubectl completion bash)
-alias k=kubectl
-complete -F __start_kubectl k
+if command -v kubectl &> /dev/null
+then
+  export PATH=~/.kubectx:$PATH
+  source <(kubectl completion bash)
+  alias k=kubectl
+  complete -F __start_kubectl k
+fi
 
 export PAGER=less
 
