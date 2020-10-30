@@ -16,14 +16,14 @@ bind-key -T prefix e command-prompt -I "" "rename-window '%%'" # Rename with no 
 bind-key -T prefix S command-prompt -I "" "rename-session '%%'" # Rename with no prefill
 
 # Split pane with same directory.
-bind-key -T prefix - split-window -v -c '#{pane_current_path}'
-bind-key -T prefix \ split-window -h -c '#{pane_current_path}'
-bind-key -T prefix _ split-window -fv -c '#{pane_current_path}' # Full width.
-bind-key -T prefix | split-window -fh -c '#{pane_current_path}' # Full height.
+bind-key -T prefix '-' split-window -v -c '#{pane_current_path}'
+bind-key -T prefix '\' split-window -h -c '#{pane_current_path}'
+bind-key -T prefix '_' split-window -fv -c '#{pane_current_path}' # Full width.
+bind-key -T prefix '|' split-window -fh -c '#{pane_current_path}' # Full height.
 
 # Move panes.
-bind-key -T prefix -r { swap-pane -U
-bind-key -T prefix -r } swap-pane -D
+bind-key -T prefix -r '{' swap-pane -U
+bind-key -T prefix -r '}' swap-pane -D
 
 # Swap windows across themselves.
 bind-key -T prefix -r '<' swap-window -t -1

@@ -149,7 +149,7 @@ let g:gutentags_ctags_exclude = [
 """""""""""""""""
 ""* Clipboard *""
 """""""""""""""""
-set clipboard=unnamed,unnamedplus
+set clipboard+=unnamedplus
 
 Plug 'svermeulen/vim-subversive'
 nmap s <plug>(SubversiveSubstitute)
@@ -286,17 +286,6 @@ nmap <silent> <leader>tv :TestVisit<CR>
 " Switch anything with gs (ex. true -> false) try hitting gs with your cursor
 " on true or false. This works with MANY things: https://github.com/AndrewRadev/switch.vim
 Plug 'AndrewRadev/switch.vim'
-
-" auto complete (deoplete is the best imo)
-" If you want specific completions for more languages see
-" https://github.com/Shougo/deoplete.nvim/wiki/Completion-Sources
-" use tab and shift tab to accept completions, enter to insert snippet (for
-" example go somewhere in a ruby file, type def and hit enter)
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-Plug 'Shougo/neco-syntax' " this make deoplete grab completions from current buffer
-nmap <silent> <leader>ac :call deoplete#toggle()<cr>
-" Plug 'Shougo/neco-vim' " this makes it work better with vim syntax
-" Plug 'ervandew/supertab'
 
 " custom text objects
 Plug 'kana/vim-textobj-user'

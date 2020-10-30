@@ -39,8 +39,8 @@ bind-key -T copy-mode-vi E send-keys -X next-space-end
 bind-key -T copy-mode-vi g send-keys -X history-top
 bind-key -T copy-mode-vi G send-keys -X history-bottom
 bind-key -T copy-mode-vi % send-keys -X next-matching-bracket
-bind-key -T copy-mode-vi { send-keys -X previous-paragraph
-bind-key -T copy-mode-vi } send-keys -X next-paragraph
+bind-key -T copy-mode-vi '{' send-keys -X previous-paragraph
+bind-key -T copy-mode-vi '}' send-keys -X next-paragraph
 
 # Jump forward and backward.
 bind-key -T copy-mode-vi f command-prompt -1 "send -X jump-forward \"%%%\""
