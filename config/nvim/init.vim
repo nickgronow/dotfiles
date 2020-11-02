@@ -307,8 +307,12 @@ Plug 'tpope/vim-unimpaired'
 
 " SQL formatting
 Plug 'vim-scripts/SQLUtilities'
+
 " Needed for SQL formatting
 Plug 'vim-scripts/Align'
+
+" Bracket, parens, quotes in pair
+Plug 'jiangmiao/auto-pairs'
 
 " Help and Documentation
 nnoremap <silent> <leader>hh :Helptags!<CR>
