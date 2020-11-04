@@ -26,3 +26,5 @@ tags.lock
 .vim-dictionary
 bin/start
 .vim
+.pylintrc
+.flake8
