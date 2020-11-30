@@ -195,3 +195,6 @@ if [ -f ~/.bash_docker ]; then
 fi
 
 alias vim="nvim"
+
+# Python - make 3 the defualt
+alias python=python3
