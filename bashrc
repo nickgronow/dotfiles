@@ -194,6 +194,7 @@ if [ -f ~/.bash_docker ]; then
     source ~/.bash_docker
 fi
 
+# Use neovim
 alias vim="nvim"
 
 # Python - make 3 the defualt
