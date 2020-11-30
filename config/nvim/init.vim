@@ -6,7 +6,7 @@ set titleold=bash
 " Important general settings
 filetype plugin indent on
 set encoding=utf-8
-set tags=./.tags;,tags;
+set tags=./tags;/
 set mouse=a
 set wildcharm=<Tab>
 
@@ -58,7 +58,7 @@ set wildmode=longest,full
 " Highlight tabs (aka the devil)
 highlight SpecialKey ctermfg=1
 set list
-set listchars=tab:T>
+set listchars=tab:··
 set autowrite
 set autowriteall
 set smarttab
@@ -70,6 +70,10 @@ let g:ale_completion_enabled = 0
 
 " Python
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
+
+" C
+autocmd BufRead,BufNewFile *.h setfiletype c
+autocmd FileType c setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab nolist
 
 " Run PlugInstall if there's missing plugins
 autocmd VimEnter *
@@ -145,6 +149,7 @@ let g:gutentags_ctags_exclude = [
       \ '*.sql',
       \ '*/migrate/*.rb'
       \ ]
+let g:gutentags_ctags_executable = 'ctags'
 
 """""""""""""""""
 ""* Clipboard *""
@@ -340,7 +345,7 @@ nmap <leader>hg :te googler<cr>
 " By default CTRL+G in vim displays the name of the current buffer in the
 " statusline, which isn't very useful if you use plugins which always display
 " it, so I remap CTRL+G to copy the filename:line to the clipboard.
-nmap <c-g> :let @+ = expand("%:p") . ":" . line(".") \| echo 'copied ' . @+ . ' to the clipboard.'<CR>
+" nmap <c-g> :let @+ = expand("%:p") . ":" . line(".") \| echo 'copied ' . @+ . ' to the clipboard.'<CR>
 
 " D is for Do scripts (running scripts)
 nnoremap <leader>dh :History:!<CR>
@@ -456,17 +461,7 @@ inoremap <expr> <c-x><c-l> fzf#vim#complete(fzf#wrap({
 map <silent> <C-h> :bprevious<CR>
 map <silent> <C-l> :bnext<CR>
 "  Backspace to last buffer (I love this but delete it if you hate it)
-nnoremap <BS> <C-^>
-
-" Windows (these just makre more sense. You never have to let go of ctrl)
-map <c-w><c-q> <c-w>c
-nnoremap <silent> <leader>wd <c-w>c
-nnoremap <silent> <leader>wq <c-w>q
-nnoremap <silent> <leader>wo <c-w>o
-nnoremap <silent> <leader>wh <c-w><Left>
-nnoremap <silent> <leader>wl <c-w><Right>
-nnoremap <silent> <leader>wk <c-w><Up>
-nnoremap <silent> <leader>wj <c-w><Down>
+" nnoremap <BS> <C-^>
 
 " Macro shortcut: qq to record, Q to replay.
 " Also gets rid of ex mode.
