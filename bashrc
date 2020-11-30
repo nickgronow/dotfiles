@@ -197,5 +197,6 @@ fi
 # Use neovim
 alias vim="nvim"
 
-# Python - make 3 the defualt
+# Python/pip - make 3 the defualt
 alias python=python3
+alias pip=pip3
