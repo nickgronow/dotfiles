@@ -6,6 +6,13 @@
 # Pip installs commands to the .local/bin directory
 PATH="$HOME/.local/bin:$PATH"
 
+# NPM
+# PATH="$PATH:$HOME/.npm/bin"
+
+# Node
+# export N_PREFIX="$HOME/.n"
+# export PATH="${N_PREFIX}/bin:${PATH}"
+
 # Set term to a more standard value
 # export TERM=xterm-256color
 
