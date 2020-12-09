@@ -272,3 +272,9 @@ re() {
   fi
   nvim "$file"
 }
+
+# Touchpad
+alias enable-touchpad="gsettings set org.gnome.desktop.peripherals.touchpad send-events enabled"
+alias disable-touchpad="gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled"
+alias enpad=enable-touchpad
+alias dispad=disable-touchpad
