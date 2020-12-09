@@ -3,5 +3,19 @@
   "python.formatting.provider": "black",
   "coc.preferences.formatOnSaveFiletypes": ["python"],
   "graphql.filetypes": ["graphql"],
-  "python.autoComplete.extraPaths": ["/home/gronow/apps/deepfield-bootstrap/pipedream/lib"]
+  "languageserver": {
+    "ccls": {
+      "command": "ccls",
+      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
+      "rootPatterns": [".ccls-root", "compile_commands.json"],
+      "initializationOptions": {
+        "cache": {
+          "directory": ".ccls-cache"
+        },
+        "client": {
+          "snippetSupport": true
+        }
+      }
+    }
+  }
 }

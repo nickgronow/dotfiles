@@ -73,7 +73,7 @@ autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
 
 " C
 autocmd BufRead,BufNewFile *.h setfiletype c
-autocmd FileType c setlocal tabstop=4 shiftwidth=4 softtabstop=4 expandtab nolist
+autocmd FileType c setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab nolist
 
 " Run PlugInstall if there's missing plugins
 autocmd VimEnter *
