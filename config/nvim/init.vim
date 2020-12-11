@@ -139,17 +139,55 @@ command! -nargs=+ G :te git <args>
 Plug 'ludovicchabant/vim-gutentags'
 " Gutentags exclusions
 let g:gutentags_ctags_exclude = [
-      \ '*.min.js',
-      \ '*htl*',
-      \ 'jquery*.js',
-      \ '*/vendor/*',
+      \ '*.git', '*.svg', '*.hg',
+      \ 'build',
+      \ 'dist',
+      \ 'bin',
       \ 'node_modules',
-      \ '*/node_modules/*',
-      \ '*/python2.7/*',
-      \ '*.sql',
-      \ '*/migrate/*.rb'
+      \ 'bower_components',
+      \ 'cache',
+      \ 'compiled',
+      \ 'docs',
+      \ 'example',
+      \ 'bundle',
+      \ 'vendor',
+      \ '.vim',
+      \ '*.md',
+      \ '*-lock.json',
+      \ '*.lock',
+      \ '*bundle*.js',
+      \ '*build*.js',
+      \ '.*rc*',
+      \ '*.json',
+      \ '*.min.*',
+      \ '*.map',
+      \ '*.bak',
+      \ '*.zip',
+      \ '*.pyc',
+      \ '*.class',
+      \ '*.sln',
+      \ '*.Master',
+      \ '*.csproj',
+      \ '.vscode',
+      \ '*.tmp',
+      \ '*.csproj.user',
+      \ '*.cache',
+      \ '*.pdb',
+      \ 'tags*',
+      \ 'cscope.*',
+      \ '*.css',
+      \ '*.less',
+      \ '*.scss',
+      \ '*.exe', '*.dll',
+      \ '*.mp3', '*.ogg', '*.flac',
+      \ '*.swp', '*.swo',
+      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
+      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
+      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
       \ ]
 let g:gutentags_ctags_executable = 'ctags'
+let g:gutentags_add_default_project_roots = 0
+let g:gutentags_project_root = ['package.json', '.git']
 
 """""""""""""""""
 ""* Clipboard *""
@@ -542,7 +580,7 @@ endif
 source ~/.config/nvim/mappings.vim
 
 " Open files
-com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./coverage/*" ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "**/migrations*" ! -path "./.git/*" ! -path "./dist/*"' , 'sink': 'e'})
+com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./.ccls-cache/*" ! -path "./coverage/*" ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "**/migrations*" ! -path "./.git/*" ! -path "./dist/*"' , 'sink': 'e'})
 
 " Buffers
 function! GetActiveBuffers()

@@ -232,4 +232,7 @@ command! -nargs=? Fold :call     CocAction('fold', <f-args>)
 command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
 
 " Ctags
-nnoremap <C-]> g<C-]>
+" nnoremap <C-]> g<C-]>
+
+" c file toggling
+map <leader>oc :e %:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
