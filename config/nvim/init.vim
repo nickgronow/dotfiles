@@ -172,6 +172,7 @@ let g:gutentags_ctags_exclude = [
       \ '*.tmp',
       \ '*.csproj.user',
       \ '*.cache',
+      \ '*.ccls-cache',
       \ '*.pdb',
       \ 'tags*',
       \ 'cscope.*',
