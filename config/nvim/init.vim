@@ -6,7 +6,6 @@ set titleold=bash
 " Important general settings
 filetype plugin indent on
 set encoding=utf-8
-set tags=./tags;/
 set mouse=a
 set wildcharm=<Tab>
 
@@ -185,7 +184,8 @@ let g:gutentags_ctags_exclude = [
       \ ]
 let g:gutentags_ctags_executable = 'ctags'
 let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['package.json', '.git']
+let g:gutentags_project_root = ['.git']
+let g:gutentags_add_default_project_roots = 0
 
 """""""""""""""""
 ""* Clipboard *""
