@@ -32,6 +32,9 @@ nnoremap <leader>er :e! %<cr>
 " Edit vimrc
 nmap <silent> <leader>ev :e $MYVIMRC<cr>
 
+" Reload init
+nnoremap <leader>sv :source $MYVIMRC<CR>
+
 " Explore the root project directory
 nnoremap <leader>ew :Explore .<cr>
 
@@ -235,4 +238,4 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 " nnoremap <C-]> g<C-]>
 
 " c file toggling
-map <leader>oc :e %:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
+map <leader>sc :e %:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>

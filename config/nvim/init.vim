@@ -64,9 +64,6 @@ set autowriteall
 set smarttab
 set smartindent
 set autoindent " might not want this in the future, up to you
-" Enable completion where available.
-" This setting must be set before ALE is loaded.
-let g:ale_completion_enabled = 0
 
 " Python
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
@@ -244,13 +241,18 @@ Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_section_b = "%p%% - %l/%L"
+
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#fnamemod = ''
+
 let g:airline#extensions#tagbar#flags = 'f'  " show full tag hierarchy
 let g:airline#extensions#tagbar#enabled = 1
+
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#gutentags#enabled = 1
-let g:airline#extensions#ale#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
 
@@ -292,24 +294,6 @@ let g:rg_highlight = 1
 " hit " in normal more or ctrl-r (like you normally would when selecting a
 " register) and you'll get a visual representation of the available registers
 Plug 'junegunn/vim-peekaboo'
-
-" Plug 'dense-analysis/ale'
-let g:ale_linters = {'gql': ['eslint'] }
-" Ale is the best plugin out there for linting... look into it: https://github.com/w0rp/ale
-" let g:ale_fixers = {
-" \   '*': ['remove_trailing_lines', 'trim_whitespace'],
-" \   'javascript': ['eslint'],
-" \   'ruby': ['rubocop'],
-" \}
-
-" Hit F4 to pray ale will fix your code
-" nmap <F4> <Plug>(ale_fix)
-" Set this variable to 1 to fix files when you save them.
-" let g:ale_fix_on_save = 0
-" Write this in your vimrc file
-let g:ale_lint_on_enter = 0
-let g:ale_lint_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
 
 " snippets!
 Plug 'SirVer/ultisnips'
@@ -358,84 +342,21 @@ Plug 'vim-scripts/Align'
 " Bracket, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
-" Help and Documentation
-nnoremap <silent> <leader>hh :Helptags!<CR>
-" search related docsets
-nnoremap <leader>hdr :Dasht<Space>
-" search ALL the docsets
-nnoremap <leader>hda :Dasht!<Space>
-" search related docsets
-" nnoremap <silent> <Leader>ks :call Dasht([expand('<cword>'), expand('<cWORD>')])<Return>
-" search ALL the docsets
-nnoremap <silent> <leader>hd :call Dasht([expand('<cword>'), expand('<cWORD>')], '!')<Return>
-" search related docsets
-" vnoremap <silent> <Leader>k y:<C-U>call Dasht(getreg(0))<Return>
-" search ALL the docsets
-vnoremap <silent> <leader>hd y:<C-U>call Dasht(getreg(0), '!')<Return>
-" socli
-nnoremap <leader>hs :te socli -iq<space>
-" Googler
-nmap <leader>hg :te googler<cr>
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
 
-" move by visual lines when lines wrap (very useful)
-" nmap j gj
-" nmap k gk
-
-" By default CTRL+G in vim displays the name of the current buffer in the
-" statusline, which isn't very useful if you use plugins which always display
-" it, so I remap CTRL+G to copy the filename:line to the clipboard.
-" nmap <c-g> :let @+ = expand("%:p") . ":" . line(".") \| echo 'copied ' . @+ . ' to the clipboard.'<CR>
-
-" D is for Do scripts (running scripts)
-nnoremap <leader>dh :History:!<CR>
-nnoremap <leader>dd :te<space>
-nnoremap <leader>dr :te ruby %<cr>
-nnoremap <leader>db :te bash %<cr>
-
-" Rails
-nnoremap <leader>rr :te bin/rails c<cr>
-
-" Save yourself from typos
-command! Wq :wq
-command! WQ :wq
-
-" Open (if you assign $MYVIMRC to the location of this file in your zsh config
-" or whatever, you can do space o v to resource the file after making changes.
-" very handy.
-" you can change these to zsh
-" nmap <silent> <space>ott :te bash<CR>
-" nmap <silent> <space>otv :vsplit term://bash<CR>
-" nmap <silent> <space>ots :split term://bash<CR>
-
-" FZF (my fzf stuff looks ugly but I think you'll like it.)
-command! -bang -nargs=* Ag
-      \ call fzf#vim#ag(<q-args>,
-      \                 <bang>0)
-" Search text and filenames recursively, but ignore specs and migrations.
-command! -bang -nargs=* Rg
-      \ call fzf#vim#grep(
-      \   "rg --smart-case -g '!vendor/bundle/gems' -g '!spec' -g '!migrate' --color=never --column --line-number --no-heading -Tsql ".shellescape(<q-args>), 1,
-      \   <bang>0)
-" Search all text and filenames recursively.
-command! -bang -nargs=* RG
-      \ call fzf#vim#grep(
-      \   "rg --smart-case --color=never --column --line-number --no-heading -Tsql ".shellescape(<q-args>), 1,
-      \   <bang>0)
-" Search all usages of text, ignore filenames, sql, json, migrations, and specs.
-command! -bang -nargs=* Ru
-      \ call fzf#vim#grep(
-      \   "rg --smart-case -g '!spec' -g '!migrate' --color=never --column --line-number --no-heading -Tsql -Tjson ".shellescape(<q-args>), 1,
-      \   <bang>0)
-" Search all usages of text, but ignore nothing.
-command! -bang -nargs=* RU
-      \ call fzf#vim#grep(
-      \   "rg --smart-case --color=never --column --line-number --no-heading ".shellescape(<q-args>), 1,
-      \   <bang>0)
+command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0)
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
       \ 'ctrl-s': 'split',
       \ 'ctrl-v': 'vsplit' }
+
 function! SearchWordWithRg()
   execute 'Rg' expand('<cword>')
 endfunction
@@ -583,16 +504,5 @@ source ~/.config/nvim/mappings.vim
 " Open files
 com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./.ccls-cache/*" ! -path "./coverage/*" ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "**/migrations*" ! -path "./.git/*" ! -path "./dist/*"' , 'sink': 'e'})
 
-" Buffers
-function! GetActiveBuffers()
-    let l:blist = getbufinfo({'bufloaded': 1, 'buflisted': 1})
-    let l:result = []
-    for l:item in l:blist
-        "skip unnamed buffers; also skip hidden buffers?
-        if empty(l:item.name)
-            continue
-        endif
-        call add(l:result, shellescape(l:item.name))
-    endfor
-    return join(l:result)
-endfunction
+" CTags
+com! TS execute 'ts '.expand("<cword>")
