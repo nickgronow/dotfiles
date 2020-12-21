@@ -344,6 +344,9 @@ Plug 'jiangmiao/auto-pairs'
 
 function! RipgrepFzf(query, fullscreen)
   let filetype = &filetype
+  if filetype == 'python'
+        let filetype = 'py'
+  endif
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case --type %s -- %s || true'
   let initial_command = printf(command_fmt, filetype, shellescape(a:query))
   let reload_command = printf(command_fmt, filetype, '{q}')
