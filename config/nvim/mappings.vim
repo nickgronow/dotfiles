@@ -137,13 +137,6 @@ else
 endif
 nmap <leader>aa <Plug>(coc-codeaction)
 nmap <leader>af <Plug>(coc-fix-current)
-nmap <silent> <leader>ae <Plug>(coc-diagnostic-next-error)
-nmap <silent> <leader>an <Plug>(coc-diagnostic-next)
-nmap <silent> <leader>ad <Plug>(coc-definition)
-nmap <silent> <leader>ai <Plug>(coc-implementation)
-nmap <silent> <leader>at <Plug>(coc-type-definition)
-nmap <silent> <leader>ar <Plug>(coc-references)
-nmap <silent> <leader>af <Plug>(coc-format)
 
 " Use `[g` and `]g` to navigate diagnostics
 " Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.

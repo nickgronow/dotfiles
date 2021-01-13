@@ -65,7 +65,7 @@ set smartindent
 set autoindent " might not want this in the future, up to you
 
 " Python
-autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab
+autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=88
 
 " C
 autocmd BufRead,BufNewFile *.h setfiletype c
