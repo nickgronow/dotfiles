@@ -253,6 +253,8 @@ let g:airline#extensions#tagbar#enabled = 1
 
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#gutentags#enabled = 1
+let g:airline#extensions#gutentags#enabled = 1
+let g:airline#extensions#coc#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
 
