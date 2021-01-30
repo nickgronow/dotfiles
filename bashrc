@@ -204,6 +204,17 @@ fi
 # Use neovim
 alias vim="nvim"
 
-# Python/pip - make 3 the defualt
-alias python=python3
+# pip - make 3 the defualt
 alias pip=pip3
+
+# gcloud
+export CLOUDSDK_PYTHON=/usr/bin/python
+
+# pyenv
+export PATH="/home/nick/.pyenv/bin:$PATH"
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+    eval "$(pyenv virtualenv-init -)"
+else
+    alias python=python3
+fi
