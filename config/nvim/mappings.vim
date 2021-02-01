@@ -232,3 +232,6 @@ command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organize
 
 " c file toggling
 map <leader>sc :e %:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
+
+" Python ipdb
+nmap <leader>i Oimport ipdb; ipdb.set_trace()<esc>j0
