@@ -63,6 +63,9 @@ set autowriteall
 set smarttab
 set smartindent
 set autoindent " might not want this in the future, up to you
+" Gutter config
+set numberwidth=4
+set signcolumn=yes:1
 
 " Python
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=88
@@ -211,31 +214,6 @@ nmap y <plug>(YoinkYankPreserveCursorPosition)
 xmap y <plug>(YoinkYankPreserveCursorPosition)
 inoremap <silent> <c-v> <c-o>P
 
-" Terminals (sayonara is to make closing them better/easier)
-Plug 'mhinz/vim-sayonara'
-tnoremap <silent> <esc> <C-\><c-n>:Sayonara<CR>
-tnoremap <silent> <c-c> <C-\><c-n>
-tnoremap <silent> <c-h> <C-\><c-n>:bp<CR>
-tnoremap <silent> <c-l> <C-\><c-n>:bn<CR>
-tnoremap <silent> <c-Left> <C-\><c-n>:bp<CR>
-tnoremap <silent> <c-Right> <C-\><c-n>:bn<CR>
-autocmd TermOpen * startinsert
-autocmd TermClose * stopinsert
-au TermOpen * setlocal nonumber norelativenumber
-" I also  bind sayonara to ctrl b ctrl d
-" nnoremap <silent> <c-b><c-d> :Sayonara!<CR>
-" nnoremap <silent> <c-b><c-q> :Sayonara!<CR>
-" It does this https://github.com/mhinz/vim-sayonara
-" quote:
-" This plugin provides a single command that deletes the current buffer and
-" handles the current window in a smart way.  Basically you don't have to
-" think in terms of :bdelete, :close, :quit etc. anymore. The plugin does that
-" for you.  First of all, :Sayonara or :Sayonara! will only delete the buffer,
-" if it isn't shown in any other window. Otherwise :bdelete would close these
-" windows as well. Therefore both commands always only affect the current
-" window. This is what the user expects and is easy reason about.  If the
-" buffer contains unsaved changes, you'll be prompted on what to do.
-
 " Airline
 Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
@@ -348,6 +326,8 @@ function! RipgrepFzf(query, fullscreen)
   let filetype = &filetype
   if filetype == 'python'
         let filetype = 'py'
+  elseif filetype == 'vue'
+        let filetype = 'js'
   endif
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case --type %s -- %s || true'
   let initial_command = printf(command_fmt, filetype, shellescape(a:query))

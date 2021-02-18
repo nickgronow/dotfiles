@@ -99,18 +99,6 @@ function cd() {
   done
 }
 
-# Modified version where you can press
-#   - CTRL-O to open with `open` command,
-#   - CTRL-E or Enter key to open with the $EDITOR
-sfo() {
-  local out file key
-  IFS=$'\n' out=($(fzf --query="$1" --exit-0 --expect=ctrl-o,ctrl-e))
-  key=$(head -1 <<< "$out")
-  file=$(head -2 <<< "$out" | tail -1)
-  if [ -n "$file" ]; then
-    [ "$key" = ctrl-o ] && open "$file" || ${EDITOR:-vim} "$file"
-  fi
-}
 # fasd & fzf change directory - open best matched file using `fasd` if given argument, filter output of `fasd` using `fzf` else
 v() {
   [ $# -gt 0 ] && fasd -f -e ${EDITOR} "$*" && return
@@ -278,3 +266,6 @@ alias enable-touchpad="gsettings set org.gnome.desktop.peripherals.touchpad send
 alias disable-touchpad="gsettings set org.gnome.desktop.peripherals.touchpad send-events disabled"
 alias enpad=enable-touchpad
 alias dispad=disable-touchpad
+
+# Open files
+alias open="xdg-open"

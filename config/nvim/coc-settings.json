@@ -1,4 +1,7 @@
 {
+  "markdownlint.config": {
+    "line_length": false
+  },
   "coc.preferences.enableMarkdown": false,
   "python.jediEnabled": true,
   "python.formatting.provider": "black",
