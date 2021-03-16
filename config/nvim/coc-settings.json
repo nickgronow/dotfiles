@@ -6,7 +6,7 @@
   "python.jediEnabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["-t", "py37", "--fast", "-l", "88"],
-  "coc.preferences.formatOnSaveFiletypes": ["python"],
+  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "vue", "python"],
   "graphql.filetypes": ["graphql"],
   "languageserver": {
     "ccls": {

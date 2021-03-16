@@ -492,3 +492,6 @@ com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./.ccls-cache/*"
 
 " CTags
 com! TS execute 'ts '.expand("<cword>")
+
+" Prettier
+command! -nargs=0 Prettier :CocCommand prettier.formatFile
