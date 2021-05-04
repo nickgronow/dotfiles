@@ -18,7 +18,7 @@ syntax sync minlines=10000
 filetype on
 set hidden
 set inccommand=split
-set showtabline=2
+set showtabline=0
 set nu
 set rnu
 " Insert spaces when TAB is pressed.
@@ -32,7 +32,6 @@ set splitbelow
 " Vertical split to right of current.
 set splitright
 set nocompatible
-set cursorline
 set ignorecase
 set smartcase
 " the intro is annoying
@@ -67,12 +66,23 @@ set autoindent " might not want this in the future, up to you
 set numberwidth=4
 set signcolumn=yes:1
 
+hi CursorLine cterm=none ctermbg=black
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
+
 " Python
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=88
 
 " C
 autocmd BufRead,BufNewFile *.h setfiletype c
 autocmd FileType c setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab nolist
+
+" XML
+let g:xml_syntax_folding=1
+au FileType xml setlocal foldmethod=syntax
 
 " Run PlugInstall if there's missing plugins
 autocmd VimEnter *
@@ -89,18 +99,15 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Tmux navigation across vim panes
 Plug 'christoomey/vim-tmux-navigator'
 
-" Tomorrow night colors
-Plug 'chriskempson/base16-vim'
+" Dracula colors
+Plug 'dracula/vim', {'as': 'dracula'}
 
-" jellybeans
-Plug 'nanotech/jellybeans.vim'
+" iTerm2
+Plug 'tomjrees/vim-iterm2-navigator'
 
 " Vue syntax
 Plug 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
-
-" my theme. you can use something else.
-Plug 'crusoexia/vim-monokai'
 
 Plug 'tpope/vim-sensible'
 Plug 'sheerun/vim-polyglot'
@@ -220,7 +227,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 let g:airline_section_b = "%p%% - %l/%L"
 
-let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#enabled = 0
 let g:airline#extensions#tabline#left_sep = ' '
 let g:airline#extensions#tabline#left_alt_sep = ''
 let g:airline#extensions#tabline#formatter = 'unique_tail'
@@ -235,6 +242,7 @@ let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#coc#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
+let g:airline_theme='dracula'
 
 " Highlight colors in any buffer
 Plug 'ap/vim-css-color'
@@ -322,21 +330,28 @@ Plug 'vim-scripts/Align'
 " Bracket, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
-function! RipgrepFzf(query, fullscreen)
-  let filetype = &filetype
-  if filetype == 'python'
-        let filetype = 'py'
-  elseif filetype == 'vue'
-        let filetype = 'js'
+function! RipgrepFzf(query, fullscreen, ignore_filetype)
+  let filetype = ''
+  if !a:ignore_filetype
+    let filetype = &filetype
+    if filetype == 'python'
+      let filetype = 'py'
+    elseif filetype == 'vue'
+      let filetype = 'js'
+    elseif filetype == 'javascript'
+      let filetype = 'js'
+    endif
+    let filetype = "--type " . filetype
   endif
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case --type %s -- %s || true'
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s -- %s || true'
   let initial_command = printf(command_fmt, filetype, shellescape(a:query))
   let reload_command = printf(command_fmt, filetype, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0)
+command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, 1)
+command! -nargs=* -bang Rg call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, 0)
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -426,6 +441,7 @@ nnoremap <silent> <esc> :noh<return><esc>
 
 " LSP support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
+let g:coc_global_extensions = ['coc-solargraph']
 
 call plug#end()
 
@@ -472,12 +488,12 @@ endif
 
 " Coloring
 
-set background=dark
-set t_Co=256
-set termguicolors
-let base16colorspace=256
-colorscheme base16-default-dark
-hi Normal guibg=NONE ctermbg=NONE
+" set background=dark
+" set t_Co=256
+" set termguicolors
+" let base16colorspace=256
+" colorscheme base16-default-dark
+hi Normal ctermbg=None
 
 " Vimdiff color scheme
 if &diff

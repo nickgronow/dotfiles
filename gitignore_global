@@ -30,3 +30,4 @@ bin/start
 .flake8
 .ccls-cache
 .ccls
+.solargraph.yml

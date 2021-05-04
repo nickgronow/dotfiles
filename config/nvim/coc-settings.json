@@ -3,11 +3,14 @@
     "line_length": false
   },
   "coc.preferences.enableMarkdown": false,
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
   "python.jediEnabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["-t", "py37", "--fast", "-l", "88"],
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "vue", "python"],
+  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "vue", "python", "ruby"],
   "graphql.filetypes": ["graphql"],
+  "solargraph.diagnostics": true,
+  "solargraph.formatting": true,
   "languageserver": {
     "ccls": {
       "command": "ccls",

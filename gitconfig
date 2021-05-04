@@ -1,5 +1,5 @@
 [user]
-  email = nick@wov.io
+  email = ngronow@lwolf.com
   name = Nick Gronow
 [alias]
   co = commit -m
@@ -39,3 +39,5 @@
   prompt = false
 [pull]
 	ff = only
+[pager]
+	branch = false

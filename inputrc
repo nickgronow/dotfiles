@@ -13,9 +13,6 @@ set menu-complete-display-prefix off
 # Keymaps for when we're in command mode (e.g., after hitting ESC)
 set keymap vi-command
 
-# Insert the arguments from the last command
-"p": "i !!*\r"
-
 # When hitting option-up/option-down, cycle through the previous commands
 # which start with the prefix you've entered, rather than just cycling through
 # the last entered commands.
@@ -40,7 +37,3 @@ TAB: menu-complete
 # Option-up/option-down should also apply to insert mode
 #"\C-k": history-search-backward
 #"\C-j": history-search-forward
-
-# Needed because binding 'p' in command mode above wipes its insert mode
-# function, too. This fixes that, and will insert 'p' when you type 'p'.
-"p": self-insert

@@ -121,7 +121,15 @@ GIT_PROMPT_SHOW_UPSTREAM= # show upstream tracking branch
 GIT_PROMPT_SHOW_UNTRACKED_FILES=all # can be no, normal or all; determines counting of untracked files
 GIT_PROMPT_SHOW_CHANGED_FILES_COUNT=1 # print the number of changed files
 GIT_PROMPT_THEME=Default_Ubuntu
-source ~/.bash-git-prompt/gitprompt.sh
+if brew -v &> /dev/null; then
+  if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+    __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+    GIT_PROMPT_ONLY_IN_REPO=1
+    source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+  fi
+else
+  source ~/.bash-git-prompt/gitprompt.sh
+fi
 
 # ================
 #       FZF
