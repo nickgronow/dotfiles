@@ -20,7 +20,7 @@ alias ll='ls -alhFG'
 eval "$(fasd --init auto)"
 
 # FZF
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 
 # Vim
 alias vim=nvim
