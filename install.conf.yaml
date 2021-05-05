@@ -4,8 +4,6 @@
 - clean: ['~']
 
 - link:
-    ~/.tmux: tmux
-    ~/.tmux.conf: tmux/tmux.conf
     ~/.bashrc: bashrc
     ~/.bash_aliases: bash_aliases
     ~/.dir_colors: dir_colors
@@ -18,6 +16,7 @@
     ~/.inputrc: inputrc
     ~/.editrc: editrc
     ~/.config/nvim: config/nvim
-    ~/.zshrc: ohmyzsh
-    ~/.oh-my-zsh/custom/main.zsh: zshrc
+    ~/.zprofile: zprofile
+    ~/.zshrc: zshrc
+    ~/.oh-my-zsh/custom/main.zsh: ohmyzsh
     ~/.rubocop.yml: rubocop.yml

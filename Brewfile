@@ -1,0 +1,8 @@
+brew 'neovim'
+brew 'ripgrep'
+brew 'ctags'
+brew 'gnu-sed'
+brew 'htop'
+brew 'findutils'
+brew 'fzf'
+brew 'fasd'
