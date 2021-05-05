@@ -24,11 +24,17 @@ eval "$(fasd --init auto)"
 
 # Vim
 alias vim=nvim
-alias ep="vim ~/dotfiles/zshrc"
-alias rp="source ~/dotfiles/zshrc"
+alias ep="vim ~/dotfiles/ohmyzsh"
+alias rp="source ~/dotfiles/ohmyzsh"
 
 # Docker
 alias dkc=docker-compose
+
+# Kubernetes
+alias k=kubectl
+function db() {
+  kubectl port-forward svc/postgres-12-postgresql "4000:5432"
+}
 
 # Git
 alias gitst="git st"
