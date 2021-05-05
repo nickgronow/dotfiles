@@ -4,10 +4,6 @@ bindkey -v
 # My binaries
 path=("$HOME/bin" $path)
 
-# rbenv
-path=("$HOME/.rbenv/bin" $path)
-eval "$(rbenv init -)"
-
 # History Settings
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 export SAVEHIST=5000
@@ -60,6 +56,3 @@ cleanup() {
 
 # iTerm2 Shell Integration
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh" || true
-
-# Imagemagick
-path=("/usr/local/opt/imagemagick@6/bin" $path)
