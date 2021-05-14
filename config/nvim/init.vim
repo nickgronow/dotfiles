@@ -330,28 +330,20 @@ Plug 'vim-scripts/Align'
 " Bracket, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
-function! RipgrepFzf(query, fullscreen, ignore_filetype)
-  let filetype = ''
-  if !a:ignore_filetype
-    let filetype = &filetype
-    if filetype == 'python'
-      let filetype = 'py'
-    elseif filetype == 'vue'
-      let filetype = 'js'
-    elseif filetype == 'javascript'
-      let filetype = 'js'
-    endif
-    let filetype = "--type " . filetype
+function! RipgrepFzf(query, fullscreen, glob_prefix, ...)
+  let iglob = ''
+  if a:0
+    let iglob = "--iglob '" . a:glob_prefix . a:1 . "/**/*'"
   endif
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s -- %s || true'
-  let initial_command = printf(command_fmt, filetype, shellescape(a:query))
-  let reload_command = printf(command_fmt, filetype, '{q}')
+  let initial_command = printf(command_fmt, iglob, shellescape(a:query))
+  let reload_command = printf(command_fmt, iglob, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, 1)
-command! -nargs=* -bang Rg call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, 0)
+command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, '', <f-args>)
+command! -nargs=* -bang RGI call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, '!', <f-args>)
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -480,6 +472,9 @@ com! FormatJSON %!python -m json.tool
 
 " SQL formatter
 com! FormatSql execute '%!sqlformat --reindent --keywords upper --identifiers lower -' | set ft=sql
+
+" XML formatter
+com! FormatXML %! xmllint --format -
 
 " Add autocomplete dictionary if it exists
 if filereadable(".vim-dictionary")
