@@ -109,6 +109,9 @@ Plug 'tomjrees/vim-iterm2-navigator'
 Plug 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
 
+" Earthly syntax
+Plug 'earthly/earthly.vim', { 'branch': 'main' }
+
 Plug 'tpope/vim-sensible'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf'
@@ -434,6 +437,7 @@ nnoremap <silent> <esc> :noh<return><esc>
 " LSP support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-solargraph']
+hi CocErrorSign ctermfg=black
 
 call plug#end()
 
