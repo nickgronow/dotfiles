@@ -96,8 +96,14 @@ set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-" Tmux navigation across vim panes
-Plug 'christoomey/vim-tmux-navigator'
+" xterm colors
+Plug 'guns/xterm-color-table.vim'
+
+" Dim Inactive
+Plug 'blueyed/vim-diminactive'
+let g:diminactive_use_colorcolumn = 1
+let g:diminactive_use_syntax = 0 
+hi ColorColumn ctermbg=236
 
 " Dracula colors
 Plug 'dracula/vim', {'as': 'dracula'}
