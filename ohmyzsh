@@ -28,7 +28,7 @@ alias ep="vim ~/dotfiles/ohmyzsh"
 alias rp="source ~/dotfiles/ohmyzsh"
 
 # Docker
-alias dkc="docker compose"
+alias dkc="docker-compose"
 
 # Kubernetes
 alias k=kubectl
