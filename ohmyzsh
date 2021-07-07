@@ -29,6 +29,16 @@ alias rp="source ~/dotfiles/ohmyzsh"
 
 # Docker
 alias dkc="docker-compose"
+alias dkr="docker-compose run"
+function dke() {
+  if [ "$#" -eq "1" ]; then
+    echo "Running docker-compose exec $1 bash"
+    docker-compose exec "$1" bash
+  else
+    echo "Running docker-compose exec $@"
+    docker-compose exec "$@"
+  fi
+}
 
 # Kubernetes
 alias k=kubectl

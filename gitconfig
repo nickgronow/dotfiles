@@ -14,6 +14,7 @@
   lg = log --pretty=format:'%C(yellow)%h%Creset  %>(12)%C(green)%ar%Creset  %<(18)%C(bold blue)%aN%Creset %C(red)%d%Creset %s'
   lgw = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar)%Creset %C(ul)(%cr)%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   diff-file = diff -p --no-prefix -U1000
+  gone = ! "git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D"
 [core]
   quotepath = false
   excludesfile = ~/.gitignore_global
