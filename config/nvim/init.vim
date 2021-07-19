@@ -99,10 +99,13 @@ call plug#begin('~/.local/share/nvim/plugged')
 " xterm colors
 Plug 'guns/xterm-color-table.vim'
 
+" Graphql
+Plug 'jparise/vim-graphql'
+
 " Dim Inactive
 Plug 'blueyed/vim-diminactive'
 let g:diminactive_use_colorcolumn = 1
-let g:diminactive_use_syntax = 0 
+let g:diminactive_use_syntax = 0
 hi ColorColumn ctermbg=236
 
 " Dracula colors
@@ -443,7 +446,9 @@ nnoremap <silent> <esc> :noh<return><esc>
 " LSP support
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-solargraph']
-hi CocErrorSign ctermfg=black
+" hi CocErrorSign ctermbg=black
+hi Pmenu ctermbg=234 ctermfg=249
+hi PmenuSel ctermbg=233 ctermfg=250
 
 call plug#end()
 

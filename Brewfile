@@ -13,3 +13,6 @@ brew 'postgresql'
 brew 'earthly'
 brew 'hasura-cli'
 brew 'tree'
+
+tap 'omrikiei/ktunnel'
+brew 'ktunnel', args: ['HEAD']
