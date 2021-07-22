@@ -35,7 +35,7 @@ alias dkr="docker-compose run"
 function dke() {
   if [[ $1 = psql ]]; then
     echo "Running docker-compose exec db psql"
-    docker-compose exec db psql
+    docker-compose exec db psql -U postgres
   elif [[ $# -eq 1 ]]; then
     echo "Running docker-compose exec $1 bash"
     docker-compose exec "$1" bash
