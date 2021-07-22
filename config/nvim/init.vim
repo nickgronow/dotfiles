@@ -96,6 +96,9 @@ set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" COC ZSH
+Plug 'tjdevries/coc-zsh'
+
 " xterm colors
 Plug 'guns/xterm-color-table.vim'
 
@@ -447,8 +450,8 @@ nnoremap <silent> <esc> :noh<return><esc>
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 let g:coc_global_extensions = ['coc-solargraph']
 " hi CocErrorSign ctermbg=black
-hi Pmenu ctermbg=234 ctermfg=249
-hi PmenuSel ctermbg=233 ctermfg=250
+hi Pmenu ctermbg=234 ctermfg=251
+hi PmenuSel ctermbg=232 ctermfg=255
 
 call plug#end()
 
@@ -476,11 +479,6 @@ function! s:check_back_space() abort "{{{
     let col = col('.') - 1
     return !col || getline('.')[col - 1]  =~ '\s'
 endfunction"}}}
-
-" If you don't like the default completion menu colors you can edit them:
-" highlight Pmenu ctermbg=8 guibg=#606060
-" highlight PmenuSel ctermbg=1 guifg=#dddd00 guibg=#1f82cd
-" highlight PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 " JSON formatter
 com! FormatJSON %!python -m json.tool
