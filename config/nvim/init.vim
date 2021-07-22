@@ -105,12 +105,6 @@ Plug 'guns/xterm-color-table.vim'
 " Graphql
 Plug 'jparise/vim-graphql'
 
-" Dim Inactive
-Plug 'blueyed/vim-diminactive'
-let g:diminactive_use_colorcolumn = 1
-let g:diminactive_use_syntax = 0
-hi ColorColumn ctermbg=236
-
 " Dracula colors
 Plug 'dracula/vim', {'as': 'dracula'}
 
@@ -452,6 +446,7 @@ let g:coc_global_extensions = ['coc-solargraph']
 " hi CocErrorSign ctermbg=black
 hi Pmenu ctermbg=234 ctermfg=251
 hi PmenuSel ctermbg=232 ctermfg=255
+" hi PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 call plug#end()
 
