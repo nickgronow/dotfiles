@@ -9,6 +9,7 @@
   "python.formatting.blackArgs": ["-t", "py37", "--fast", "-l", "88"],
   "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "vue", "python", "ruby"],
   "graphql.filetypes": ["graphql"],
+  "solargraph.checkGemVersion": false,
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
   "languageserver": {
