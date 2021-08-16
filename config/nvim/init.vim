@@ -96,6 +96,9 @@ set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" SQL & PLPG
+Plug 'lifepillar/pgsql.vim'
+
 " COC ZSH
 Plug 'tjdevries/coc-zsh'
 

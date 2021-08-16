@@ -18,6 +18,9 @@ setopt hist_reduce_blanks
 # LS
 alias ll='ls -alhFG'
 
+# Files
+alias dud="du -h -d1 | sort -h | tail -r"
+
 # FASD
 eval "$(fasd --init auto)"
 
