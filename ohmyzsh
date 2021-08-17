@@ -49,9 +49,15 @@ function dke() {
 }
 
 # Kubernetes
+source <(kubectl completion zsh)
 alias k=kubectl
+complete -F __start_kubectl k
+
 function db() {
   kubectl port-forward svc/postgres-12-postgresql "4000:5432"
+}
+function kubesec {
+  kubectl get secrets "$1" -o json | jq -r ".data.$2" | base64 --decode
 }
 
 # Git
