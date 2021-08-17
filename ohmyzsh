@@ -25,6 +25,9 @@ alias dud="du -h -d1 | sort -h | tail -r"
 eval "$(fasd --init auto)"
 
 # Autocomplete
+zstyle ':autocomplete:*' default-context 'history-incremental-search-backward'
+zstyle ':autocomplete:history-search:*' list-lines 5  # int
+zstyle ':autocomplete:*' list-lines 5  # int
 source ~/dotfiles/zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
 # FZF
