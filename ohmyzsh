@@ -24,6 +24,9 @@ alias dud="du -h -d1 | sort -h | tail -r"
 # FASD
 eval "$(fasd --init auto)"
 
+# Autocomplete
+source ~/dotfiles/zsh/zsh-autocomplete/zsh-autocomplete.plugin.zsh
+
 # FZF
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 
