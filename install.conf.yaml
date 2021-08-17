@@ -19,4 +19,5 @@
     ~/.zprofile: zprofile
     ~/.zshrc: zshrc
     ~/.oh-my-zsh/custom/main.zsh: ohmyzsh
+    ~/.oh-my-zsh/custom/git.zsh: zsh-git
     ~/.rubocop.yml: rubocop.yml
