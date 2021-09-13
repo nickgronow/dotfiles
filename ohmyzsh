@@ -33,21 +33,24 @@ alias ep="vim ~/dotfiles/ohmyzsh"
 alias rp="source ~/dotfiles/ohmyzsh"
 
 # Docker
-alias dkc="docker-compose"
-alias dkr="docker-compose run"
+alias dkc="docker compose"
+function dkr() {
+  echo "Running docker-compose run --rm $@"
+  docker compose run --rm "$@"
+}
 function dke() {
   if [[ $1 = psql ]]; then
-    echo "Running docker-compose exec db psql"
-    docker-compose exec db psql -U postgres
+    echo "Running docker compose exec db psql"
+    docker compose exec db psql -U postgres
   elif [[ $# -eq 1 ]]; then
-    echo "Running docker-compose exec $1 bash"
-    docker-compose exec "$1" bash
+    echo "Running docker compose exec $1 bash"
+    docker compose exec "$1" bash
   elif [[ $# -eq 0 ]]; then
-    local service="$(docker-compose ps --services | fzf)"
-    docker-compose exec "$service" bash
+    local service="$(docker compose ps --services | fzf)"
+    docker compose exec "$service" bash
   else
-    echo "Running docker-compose exec $@"
-    docker-compose exec "$@"
+    echo "Running docker compose exec $@"
+    docker compose exec "$@"
   fi
 }
 
