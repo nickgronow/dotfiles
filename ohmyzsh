@@ -21,8 +21,8 @@ alias ll='ls -alhFG'
 # Files
 alias dud="du -h -d1 | sort -h | tail -r"
 
-# FASD
-eval "$(fasd --init auto)"
+# Z
+source /usr/local/etc/profile.d/z.sh
 
 # FZF
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
