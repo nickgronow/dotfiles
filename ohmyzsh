@@ -98,3 +98,8 @@ source ~/.oh-my-zsh/custom/git.zsh
 
 # Zsh autosuggestion
 bindkey '^ ' autosuggest-accept
+
+# z
+function ze() {
+  z -l "$1" | head -n1 | tr -s ' ' | cut -d' ' -f2
+}
