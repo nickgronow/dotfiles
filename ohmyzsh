@@ -60,7 +60,7 @@ alias k=kubectl
 complete -F __start_kubectl k
 
 function db() {
-  kubectl port-forward svc/postgres-12-postgresql "4000:5432"
+  kubectl port-forward svc/postgres-postgresql "4000:5432"
 }
 function kubesec {
   kubectl get secrets "$1" -o json | jq -r ".data.$2" | base64 --decode
@@ -103,3 +103,6 @@ bindkey '^ ' autosuggest-accept
 function ze() {
   z -l "$1" | head -n1 | tr -s ' ' | cut -d' ' -f2
 }
+
+# Zsh partial line
+PROMPT_EOL_MARK=''

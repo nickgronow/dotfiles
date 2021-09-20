@@ -86,7 +86,7 @@ vnoremap <leader>fc :s/\v\s+/ /<cr>gv:!column -t -s \\|<cr>gv:s/\v(  [^ ])/\\|\1
 nnoremap <silent> <leader>fs :SQLUFormatter<CR>
 
 " Git
-nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gb :Git blame<cr>
 
 " GitGutter
 nnoremap <leader>gn :GitGutterNextHunk<cr>
