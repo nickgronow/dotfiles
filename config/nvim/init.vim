@@ -480,6 +480,7 @@ endfunction"}}}
 
 " JSON formatter
 com! FormatJSON %!python -m json.tool
+com! ParseJSON execute 'normal G$xgg^x:%s/\v(\\)?\\"/"/g' | FormatJSON
 
 " SQL formatter
 com! FormatSql execute '%!sqlformat --reindent --keywords upper --identifiers lower -' | set ft=sql

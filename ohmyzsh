@@ -34,24 +34,28 @@ alias rp="source ~/dotfiles/ohmyzsh"
 
 # Docker
 alias dkc="docker compose"
+function dk() {
+  local command=exec
+  if [[ $1 = run ]]; then
+    command="run --rm"
+  fi
+  if [[ $# -eq 1 ]]; then
+    local service="$(docker compose ps --services | fzf)"
+    echo "Running docker compose $command $service bash"
+    docker compose "$command" "$service" bash
+  elif [[ $2 = bash ]]; then
+    echo "Running docker compose $command $2 bash"
+    docker compose "$command" "$2" bash
+  else
+    echo "Running docker compose $command $@"
+    docker compose "$command" "$@"
+  fi
+}
 function dkr() {
-  echo "Running docker-compose run --rm $@"
-  docker compose run --rm "$@"
+  dk run "$@"
 }
 function dke() {
-  if [[ $1 = psql ]]; then
-    echo "Running docker compose exec db psql"
-    docker compose exec db psql -U postgres
-  elif [[ $# -eq 1 ]]; then
-    echo "Running docker compose exec $1 bash"
-    docker compose exec "$1" bash
-  elif [[ $# -eq 0 ]]; then
-    local service="$(docker compose ps --services | fzf)"
-    docker compose exec "$service" bash
-  else
-    echo "Running docker compose exec $@"
-    docker compose exec "$@"
-  fi
+  dk exec "$@"
 }
 
 # Kubernetes
