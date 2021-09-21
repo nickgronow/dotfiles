@@ -34,6 +34,7 @@ alias rp="source ~/dotfiles/ohmyzsh"
 
 # Docker
 alias dkc="docker compose"
+alias dku="docker compose up"
 function dk() {
   local subcommand=exec
   if [[ $1 = run ]]; then
@@ -110,3 +111,7 @@ function ze() {
 
 # Zsh partial line
 PROMPT_EOL_MARK=''
+
+# Zsh disable highlighting (doesn't work well sometimes in docker)
+zle_highlight+=(paste:none)
+unset zle_bracketed_paste
