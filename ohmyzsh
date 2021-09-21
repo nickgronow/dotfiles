@@ -35,20 +35,20 @@ alias rp="source ~/dotfiles/ohmyzsh"
 # Docker
 alias dkc="docker compose"
 function dk() {
-  local command=exec
+  local subcommand=exec
   if [[ $1 = run ]]; then
-    command="run --rm"
+    subcommand="run --rm"
   fi
   if [[ $# -eq 1 ]]; then
     local service="$(docker compose ps --services | fzf)"
-    echo "Running docker compose $command $service bash"
-    docker compose "$command" "$service" bash
-  elif [[ $2 = bash ]]; then
-    echo "Running docker compose $command $2 bash"
-    docker compose "$command" "$2" bash
+    echo "Running: docker compose $subcommand $service bash"
+    eval "docker compose $subcommand $service bash"
+  elif [[ $# -eq 2 ]]; then
+    echo "Running: docker compose $subcommand $2 bash"
+    eval "docker compose $subcommand $2 bash"
   else
-    echo "Running docker compose $command $@"
-    docker compose "$command" "$@"
+    echo "Running: docker compose $subcommand $@"
+    eval "docker compose $subcommand $@"
   fi
 }
 function dkr() {
