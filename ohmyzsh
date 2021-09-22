@@ -22,7 +22,12 @@ alias ll='ls -alhFG'
 alias dud="du -h -d1 | sort -h | tail -r"
 
 # Z
-source /usr/local/etc/profile.d/z.sh
+if [ -f /usr/local/etc/profile.d/z.sh ]; then
+  source /usr/local/etc/profile.d/z.sh
+fi
+if [ -f /opt/homebrew/etc/profile.d/z.sh ]; then
+  source /opt/homebrew/etc/profile.d/z.sh
+fi
 
 # FZF
 zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')

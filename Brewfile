@@ -14,6 +14,7 @@ brew 'hasura-cli'
 brew 'tree'
 brew 'jq'
 brew 'helm'
+brew 'doctl'
 
 # tap 'omrikiei/ktunnel'
 # brew 'omrikiei/ktunnel/ktunnel'
