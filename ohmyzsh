@@ -6,6 +6,9 @@ bindkey -v
 # My binaries
 path=("$HOME/bin" $path)
 
+# Gems
+export GEM_HOME=/Users/nick/.gem
+
 # History Settings
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
 export SAVEHIST=5000
@@ -53,6 +56,7 @@ function dk() {
     echo "Running: docker compose $subcommand $2 bash"
     eval "docker compose $subcommand $2 bash"
   else
+    shift
     echo "Running: docker compose $subcommand $@"
     eval "docker compose $subcommand $@"
   fi
@@ -76,14 +80,17 @@ function kubesec {
   kubectl get secrets "$1" -o json | jq -r ".data.$2" | base64 --decode
 }
 
+# Kubectl for google - needed until v1.26 is released
+export USE_GKE_GCLOUD_AUTH_PLUGIN=True
+
 # Git
 alias gitst="git st"
 
 # GNU sed - brew install gnu-sed
-path=("/usr/local/opt/gnu-sed/libexec/gnubin" $path)
+path=("/opt/homebrew/opt/gnu-sed/libexec/gnubin" $path)
 
 # GNU find - brew install findutils
-path=("/usr/local/opt/findutils/libexec/gnubin" $path)
+path=("/opt/homebrew/opt/findutils/libexec/gnubin" $path)
 
 # Rails
 alias rs=bin/rails
@@ -124,4 +131,20 @@ unset zle_bracketed_paste
 # Rails searching
 function rgr() {
   rg -i -t ruby -g '!vendor' -g '!spec' -g '!test' $@
+}
+
+function deploy() {
+  if [ $# = 0 ]; then
+    echo "Deploy name required."
+    return
+  fi
+  local remote_sha=$(k get deploy "$1" -o jsonpath="{.spec.template.spec.containers[0].image}" | cut -d: -f2)
+  local local_sha=$(git rev-parse HEAD)
+  if [ remote_sha = local_sha ]; then
+    echo 'No difference in local and remote commit shas.'
+  elif ! git diff-index --quiet HEAD --; then
+    echo 'You have uncommitted changes'
+  else
+    make deploy
+  fi
 }

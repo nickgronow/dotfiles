@@ -18,6 +18,7 @@
     ~/.config/nvim: config/nvim
     ~/.zprofile: zprofile
     ~/.zshrc: zshrc
+    ~/.zshenv: zshenv
     ~/.oh-my-zsh/custom/main.zsh: ohmyzsh
     ~/.oh-my-zsh/custom/git.zsh: zsh-git
     ~/.rubocop.yml: rubocop.yml

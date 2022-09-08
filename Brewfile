@@ -1,3 +1,5 @@
+tap 'tidwall/jj'
+
 brew 'neovim'
 brew 'ripgrep'
 brew 'ctags'
@@ -16,6 +18,8 @@ brew 'jq'
 brew 'helm'
 brew 'doctl'
 brew 'gh'
+brew 'jj'
+brew 'pandoc'
 
 # tap 'omrikiei/ktunnel'
 # brew 'omrikiei/ktunnel/ktunnel'

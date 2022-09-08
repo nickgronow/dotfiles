@@ -66,6 +66,7 @@ set autoindent " might not want this in the future, up to you
 set numberwidth=4
 set signcolumn=yes:1
 
+hi CursorLineNr cterm=bold
 hi CursorLine cterm=none ctermbg=black
 augroup CursorLine
   au!
