@@ -511,7 +511,7 @@ endif
 source ~/.config/nvim/mappings.vim
 
 " Open files
-com! OpenFiles call fzf#run({'source': 'find . -type f ! -path "./.ccls-cache/*" ! -path "./coverage/*" ! -path "./tmp/cache/*" ! -path "**/node_modules*" ! -path "**/migrations*" ! -path "./.git/*" ! -path "./dist/*"' , 'sink': 'e'})
+com! OpenFiles call fzf#run({'source': 'find . -type d \( -path ./coverage -o -path ./tmp/cache -o -path ./node_modules -o -path ./migrations -o -path ./.git -o -path ./dist \) -prune -o -type f' , 'sink': 'e'})
 
 " CTags
 com! TS execute 'ts '.expand("<cword>")

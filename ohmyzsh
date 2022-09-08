@@ -120,3 +120,8 @@ PROMPT_EOL_MARK=''
 # Zsh disable highlighting (doesn't work well sometimes in docker)
 zle_highlight+=(paste:none)
 unset zle_bracketed_paste
+
+# Rails searching
+function rgr() {
+  rg -i -t ruby -g '!vendor' -g '!spec' -g '!test' $@
+}

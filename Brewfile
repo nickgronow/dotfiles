@@ -15,6 +15,7 @@ brew 'tree'
 brew 'jq'
 brew 'helm'
 brew 'doctl'
+brew 'gh'
 
 # tap 'omrikiei/ktunnel'
 # brew 'omrikiei/ktunnel/ktunnel'
