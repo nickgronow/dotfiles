@@ -11,7 +11,7 @@ export GEM_HOME=/Users/nick/.gem
 
 # History Settings
 export HISTFILE=${ZDOTDIR:-$HOME}/.zsh_history
-export SAVEHIST=5000
+export SAVEHIST=10000
 export HISTSIZE=2000
 setopt share_history
 setopt append_history
