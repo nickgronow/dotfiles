@@ -148,3 +148,8 @@ function deploy() {
     make deploy
   fi
 }
+
+# Device-specific stuff
+if [ -f ~/.zsh-custom ]; then
+  source ~/.zsh-custom
+fi
