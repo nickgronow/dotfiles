@@ -156,3 +156,6 @@ function deploy() {
 if [ -f ~/.zsh-custom ]; then
   source ~/.zsh-custom
 fi
+
+# Gcloud
+CLOUDSDK_COMPUTE_ZONE=us-central1-c
