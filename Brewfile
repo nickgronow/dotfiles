@@ -1,6 +1,8 @@
 tap 'tidwall/jj'
 
+brew 'cmake'
 brew 'ctags'
+brew 'diffutils'
 brew 'doctl'
 brew 'findutils'
 brew 'fzf'

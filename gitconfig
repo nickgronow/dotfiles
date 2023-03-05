@@ -22,7 +22,7 @@
 [merge]
   tool = nvim
 [push]
-  default = upstream
+  default = current
 [color]
   branch = auto
   diff = auto

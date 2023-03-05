@@ -31,3 +31,4 @@ bin/start
 .ccls-cache
 .ccls
 .solargraph.yml
+config/master.key

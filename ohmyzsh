@@ -40,6 +40,9 @@ alias vim=nvim
 alias ep="vim ~/dotfiles/ohmyzsh"
 alias rp="source ~/dotfiles/ohmyzsh"
 
+# Python
+alias python=/usr/bin/python3
+
 # Docker
 alias dkc="docker compose"
 alias dku="docker compose up"

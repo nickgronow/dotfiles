@@ -344,13 +344,9 @@ Plug 'vim-scripts/Align'
 Plug 'jiangmiao/auto-pairs'
 
 function! RipgrepFzf(query, fullscreen, glob_prefix, ...)
-  let iglob = ''
-  if a:0
-    let iglob = "--iglob '" . a:glob_prefix . a:1 . "/**/*'"
-  endif
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s -- %s || true'
-  let initial_command = printf(command_fmt, iglob, shellescape(a:query))
-  let reload_command = printf(command_fmt, iglob, '{q}')
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
@@ -480,7 +476,7 @@ function! s:check_back_space() abort "{{{
 endfunction"}}}
 
 " JSON formatter
-com! FormatJSON %!python -m json.tool
+com! FormatJSON %!python3 -m json.tool
 com! ParseJSON execute 'normal G$xgg^x:%s/\v(\\)?\\"/"/g' | FormatJSON
 
 " SQL formatter

@@ -62,7 +62,7 @@ nnoremap <leader>ts :list!
 nnoremap <leader>ce :e ++ff=dos<cr>:setlocal ff=unix<cr>
 
 " Copy the current file path
-nnoremap <leader>% :let @+ = expand("%")<cr>
+nnoremap <leader>y :let @+ = expand("%")<cr>
 
 " Window navigation
 nnoremap <c-h> <c-w>h
@@ -78,7 +78,8 @@ inoremap <c-s> <esc>
 
 " Open buffers - MVC emphasis
 nnoremap <c-p> :bp<cr>
-nnoremap <c-n> :bn<cr>
+nnoremap <c-n> :RG<cr>
+nnoremap <leader>fm :call RipgrepFzf(printf('\bfactory :%s\b', expand('<cword>')), 0, '', 'spec/factories')<cr>
 
 " Column/table formatting
 " nnoremap <leader>fh YpV:s/\v\w+/---/<cr>:set nohlsearch<cr>k
