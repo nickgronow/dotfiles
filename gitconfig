@@ -19,6 +19,7 @@
   filemode = true
   quotepath = false
   excludesfile = ~/.gitignore_global
+  pager = less -i
 [merge]
   tool = nvim
 [push]

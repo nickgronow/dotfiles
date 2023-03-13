@@ -21,6 +21,9 @@ setopt hist_reduce_blanks
 # LS
 alias ll='ls -alhFG'
 
+# Less
+export LESS=Ri
+
 # Files
 alias dud="du -h -d1 | sort -h | tail -r"
 
