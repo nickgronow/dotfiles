@@ -3,6 +3,8 @@ set title
 set titlestring=%.30t%(\ %M%)\ -\ NVIM
 set titleold=bash
 
+set updatetime=6000
+
 " Important general settings
 filetype plugin indent on
 set encoding=utf-8
@@ -155,61 +157,6 @@ command! -nargs=+ G :te git <args>
 " youll see.
 " Plug 'farmergreg/vim-lastplace'
 
-Plug 'ludovicchabant/vim-gutentags'
-" Gutentags exclusions
-let g:gutentags_ctags_exclude = [
-      \ '*.git', '*.svg', '*.hg',
-      \ 'build',
-      \ 'dist',
-      \ 'bin',
-      \ 'node_modules',
-      \ 'bower_components',
-      \ 'cache',
-      \ 'compiled',
-      \ 'docs',
-      \ 'example',
-      \ 'bundle',
-      \ 'vendor',
-      \ '.vim',
-      \ '*.md',
-      \ '*-lock.json',
-      \ '*.lock',
-      \ '*bundle*.js',
-      \ '*build*.js',
-      \ '.*rc*',
-      \ '*.json',
-      \ '*.min.*',
-      \ '*.map',
-      \ '*.bak',
-      \ '*.zip',
-      \ '*.pyc',
-      \ '*.class',
-      \ '*.sln',
-      \ '*.Master',
-      \ '*.csproj',
-      \ '.vscode',
-      \ '*.tmp',
-      \ '*.csproj.user',
-      \ '*.cache',
-      \ '*.ccls-cache',
-      \ '*.pdb',
-      \ 'tags*',
-      \ 'cscope.*',
-      \ '*.css',
-      \ '*.less',
-      \ '*.scss',
-      \ '*.exe', '*.dll',
-      \ '*.mp3', '*.ogg', '*.flac',
-      \ '*.swp', '*.swo',
-      \ '*.bmp', '*.gif', '*.ico', '*.jpg', '*.png',
-      \ '*.rar', '*.zip', '*.tar', '*.tar.gz', '*.tar.xz', '*.tar.bz2',
-      \ '*.pdf', '*.doc', '*.docx', '*.ppt', '*.pptx',
-      \ ]
-let g:gutentags_ctags_executable = 'ctags'
-let g:gutentags_add_default_project_roots = 0
-let g:gutentags_project_root = ['.git']
-let g:gutentags_add_default_project_roots = 0
-
 """""""""""""""""
 ""* Clipboard *""
 """""""""""""""""
@@ -343,6 +290,12 @@ Plug 'vim-scripts/Align'
 " Bracket, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
+" Svelte
+Plug 'evanleck/vim-svelte'
+Plug 'leafgarland/typescript-vim'
+
+let g:vim_svelte_plugin_load_full_syntax = 1
+
 function! RipgrepFzf(query, fullscreen, glob_prefix, ...)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
@@ -448,6 +401,12 @@ hi Pmenu ctermbg=234 ctermfg=251
 hi PmenuSel ctermbg=232 ctermfg=255
 " hi PmenuSbar ctermbg=0 guibg=#d6d6d6
 
+" Prettier
+Plug 'prettier/vim-prettier'
+let g:prettier#quickfix_enabled = 0
+let g:prettier#autoformat_require_pragma = 0
+au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json PrettierAsync
+
 call plug#end()
 
 " " Finally, some more autocomplete settings that need to happen outside the vim
@@ -508,10 +467,10 @@ endif
 source ~/.config/nvim/mappings.vim
 
 " Open files
-com! OpenFiles call fzf#run({'source': 'find . -type d \( -path ./coverage -o -path ./tmp/cache -o -path ./node_modules -o -path ./migrations -o -path ./.git -o -path ./dist \) -prune -o -type f' , 'sink': 'e'})
+com! OpenFiles call fzf#run({'source': 'find . -type d \( -path ./coverage -o -path ./tmp/cache -o -path ./node_modules -o -path ./migrations -o -path ./.git -o -path ./dist -o -path ./.svelte-kit \) -prune -o -type f' , 'sink': 'e'})
 
 " CTags
 com! TS execute 'ts '.expand("<cword>")
 
 " Prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" com! -nargs=0 Prettier :CocCommand prettier.formatFile

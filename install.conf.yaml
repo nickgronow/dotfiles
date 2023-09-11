@@ -9,6 +9,7 @@
     ~/.dir_colors: dir_colors
     ~/.gitconfig: gitconfig
     ~/.gitignore_global: gitignore_global
+    ~/.git_template: config/git/templatedir
     ~/.irbrc: irbrc
     ~/.pryrc: pryrc
     ~/.psqlrc: psqlrc

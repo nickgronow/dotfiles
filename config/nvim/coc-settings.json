@@ -8,7 +8,13 @@
   "python.jediEnabled": true,
   "python.formatting.provider": "black",
   "python.formatting.blackArgs": ["-t", "py37", "--fast", "-l", "88"],
-  "coc.preferences.formatOnSaveFiletypes": ["javascript", "typescript", "vue", "python", "ruby"],
+  "coc.preferences.formatOnSaveFiletypes": [
+    "javascript",
+    "typescript",
+    "vue",
+    "python",
+    "ruby"
+  ],
   "coc.preferences.willSaveHandlerTimeout": 1000,
   "graphql.filetypes": ["graphql"],
   "solargraph.checkGemVersion": false,
@@ -28,5 +34,8 @@
         }
       }
     }
-  }
+  },
+  "svelte.enable-ts-plugin": true,
+  "prettier.printWidth": 120,
+  "prettier.singleQuote": true
 }
