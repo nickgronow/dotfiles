@@ -54,7 +54,7 @@ nnoremap  <leader>n :set hlsearch!<cr>
 nnoremap <leader>u :set rnu!<cr>
 
 " Toggle viewing whitespaces
-nnoremap <leader>wh :ToggleWhitespace<cr>
+nnoremap <leader>w <c-w>c<c-w>=
 " :highlight SpecialKey ctermfg=darkgray
 nnoremap <leader>ts :list!
 
@@ -71,7 +71,7 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
 " Save file
-nnoremap <c-s> :up<cr>
+nnoremap <c-s> :w<cr>
 
 " Get out of insert mode
 inoremap <c-s> <esc>
@@ -79,12 +79,16 @@ inoremap <c-s> <esc>
 " Open buffers - MVC emphasis
 nnoremap <c-p> :bp<cr>
 nnoremap <c-n> :RG<cr>
-nnoremap <leader>fm :call RipgrepFzf(printf('\bfactory :%s\b', expand('<cword>')), 0, '', 'spec/factories')<cr>
+nnoremap <leader>fa :call RipgrepFzf(printf('\b%s\b', expand('<cword>')), 0, 'app')<cr>
+nnoremap <leader>fs :call RipgrepFzf(printf('\b%s\b', expand('<cword>')), 0, 'spec')<cr>
+nnoremap <leader>ff :call RipgrepFzf(printf('\bfactory :%s\b', expand('<cword>')), 0, 'spec/factories')<cr>
+nnoremap <leader>fd :call RipgrepFzf(printf('\bdef %s\b', expand('<cword>')), 0)<cr>
+nnoremap <leader>fs :call RipgrepFzf(printf('\bscope :%s\b', expand('<cword>')), 0)<cr>
 
 " Column/table formatting
 " nnoremap <leader>fh YpV:s/\v\w+/---/<cr>:set nohlsearch<cr>k
-vnoremap <leader>fc :s/\v\s+/ /<cr>gv:!column -t -s \\|<cr>gv:s/\v(  [^ ])/\\|\1<cr>:set nohlsearch<cr>
-nnoremap <silent> <leader>fs :SQLUFormatter<CR>
+" vnoremap <leader>fc :s/\v\s+/ /<cr>gv:!column -t -s \\|<cr>gv:s/\v(  [^ ])/\\|\1<cr>:set nohlsearch<cr>
+" nnoremap <silent> <leader>fs :SQLUFormatter<CR>
 
 " Git
 nnoremap <leader>gb :Git blame<cr>

@@ -85,6 +85,9 @@ autocmd FileType c setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab nol
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 
+" ejson
+au BufRead,BufNewFile *.ejson set syntax=json
+
 " Run PlugInstall if there's missing plugins
 autocmd VimEnter *
       \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
@@ -111,6 +114,7 @@ Plug 'jparise/vim-graphql'
 
 " Dracula colors
 Plug 'dracula/vim', {'as': 'dracula'}
+Plug 'chriskempson/base16-vim'
 
 " iTerm2
 Plug 'tomjrees/vim-iterm2-navigator'
@@ -126,6 +130,8 @@ Plug 'tpope/vim-sensible'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['hidden,right,50%,<70(up,40%)', 'ctrl-p']
 
 " Docker
 Plug 'ekalinin/Dockerfile.vim'
@@ -255,7 +261,7 @@ let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#coc#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='dracula'
+let g:airline_theme='base16'
 
 " Highlight colors in any buffer
 Plug 'ap/vim-css-color'
@@ -337,22 +343,22 @@ Plug 'tpope/vim-unimpaired'
 " SQL formatting
 Plug 'vim-scripts/SQLUtilities'
 
-" Needed for SQL formatting
-Plug 'vim-scripts/Align'
-
 " Bracket, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
-function! RipgrepFzf(query, fullscreen, glob_prefix, ...)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
+function! RipgrepFzf(query, fullscreen, ...)
+  let iglob = ''
+  if a:0
+    let iglob = "--iglob '" . a:1 . "/**/*'"
+  endif
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s -- %s || true'
+  let initial_command = printf(command_fmt, iglob, shellescape(a:query))
+  let reload_command = printf(command_fmt, iglob, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, '', <f-args>)
-command! -nargs=* -bang RGI call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, '!', <f-args>)
+command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, <f-args>)
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -449,6 +455,8 @@ hi PmenuSel ctermbg=232 ctermfg=255
 " hi PmenuSbar ctermbg=0 guibg=#d6d6d6
 
 call plug#end()
+
+colorscheme base16-default-dark
 
 " " Finally, some more autocomplete settings that need to happen outside the vim
 " " plug block:

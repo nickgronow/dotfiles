@@ -25,6 +25,7 @@ brew 'python'
 brew 'python@3.11'
 brew 'rbenv'
 brew 'ripgrep'
+brew 'sqlparse'
 brew 'tree'
 brew 'z'
 

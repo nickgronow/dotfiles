@@ -46,32 +46,52 @@ alias rp="source ~/dotfiles/ohmyzsh"
 # Python
 alias python=/usr/bin/python3
 
-# Docker
-alias dkc="docker compose"
-alias dku="docker compose up"
+# Docker compose
 function dk() {
+  local maincmd="docker compose"
+  if [ -f bin/compose ]; then
+    maincmd="bin/compose"
+  fi
   local subcommand=exec
   if [[ $1 = run ]]; then
     subcommand="run --rm"
+  elif [[ $1 = up ]]; then
+    subcommand=up
   fi
-  if [[ $# -eq 1 ]]; then
+  if [[ $1 = ps || $1 = build || $1 = stop ]]; then
+    eval "$maincmd $@"
+  elif [[ $# -eq 1 && $subcommand -ne up ]]; then
     local service="$(docker compose ps --services | fzf)"
-    echo "Running: docker compose $subcommand $service bash"
-    eval "docker compose $subcommand $service bash"
-  elif [[ $# -eq 2 ]]; then
-    echo "Running: docker compose $subcommand $2 bash"
-    eval "docker compose $subcommand $2 bash"
+    echo "Running: $maincmd $subcommand $service bash"
+    eval "$maincmd $subcommand $service bash"
+  elif [[ $# -eq 2 && $subcommand -ne up ]]; then
+    echo "Running: $maincmd $subcommand $2 bash"
+    eval "$maincmd $subcommand $2 bash"
   else
     shift
-    echo "Running: docker compose $subcommand $@"
-    eval "docker compose $subcommand $@"
+    echo "Running: $maincmd $subcommand $@"
+    eval "$maincmd $subcommand $@"
   fi
+}
+function dkc() {
+  dk "$@"
+}
+function dku() {
+  dk up --build "$@"
 }
 function dkr() {
   dk run "$@"
 }
 function dke() {
-  dk exec "$@"
+  if [[ $# -eq 1 ]]; then
+    dk exec "$@" bash
+  else
+    dk exec "$@"
+  fi
+}
+function dkb() {
+  echo "Running: docker compose build $@"
+  eval "docker compose build $@"
 }
 
 # Kubernetes
