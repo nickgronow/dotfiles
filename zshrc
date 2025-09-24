@@ -101,4 +101,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+# Warp
+function set_name () {
+  echo -ne "\033]0;${PWD/#$HOME/~}\007"
+}
+precmd_functions+=(set_name)
