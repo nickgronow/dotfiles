@@ -103,8 +103,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 " SQL & PLPG
 Plug 'lifepillar/pgsql.vim'
 
-" COC ZSH
-Plug 'tjdevries/coc-zsh'
+" Windsurf
+Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }
 
 " xterm colors
 Plug 'guns/xterm-color-table.vim'
@@ -394,10 +394,6 @@ endfunction
 " Also when using things like space f f or space f u you can hit tab to select multiple
 " files, and they pop into the quick fix list. When you get more into the
 " quickfix list you might want to try https://github.com/romainl/vim-qf
-nnoremap <silent> <leader>/ :execute 'Rg ' . input('ripgrep: ')<CR>
-nnoremap <silent> <leader>/ :execute 'Rg ' . input('ripgrep: ')<CR>
-nnoremap <silent> <leader>* :call SearchWordWithRg()<CR>
-vnoremap <silent> <leader>* :call SearchVisualSelectionWithRg()<CR>
 nnoremap <silent> <leader>fl :BLines<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fL :Lines<CR>
@@ -446,10 +442,6 @@ nnoremap <silent> ( 0
 " hit escape to remove highlighting from incremental search
 nnoremap <silent> <esc> :noh<return><esc>
 
-" LSP support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-solargraph']
-" hi CocErrorSign ctermbg=black
 hi Pmenu ctermbg=234 ctermfg=251
 hi PmenuSel ctermbg=232 ctermfg=255
 " hi PmenuSbar ctermbg=0 guibg=#d6d6d6
@@ -521,5 +513,19 @@ com! OpenFiles call fzf#run({'source': 'find . -type d \( -path ./coverage -o -p
 " CTags
 com! TS execute 'ts '.expand("<cword>")
 
-" Prettier
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+" Searching - quickfix window for grepping
+" create a self-clearing autocommand group called 'qf'
+augroup qf
+    " clear all autocommands in this group
+    autocmd!
+
+    " do :cwindow if the quickfix command doesn't start
+    " with a 'l' (:grep, :make, etc.)
+    autocmd QuickFixCmdPost [^l]* cwindow
+
+    " do :lwindow if the quickfix command starts with
+    " a 'l' (:lgrep, :lmake, etc.)
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
+
+" autocmd BufWritePost *.rb !rubocop -A %

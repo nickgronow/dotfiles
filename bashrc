@@ -235,3 +235,6 @@ export NVM_DIR="$HOME/.nvm"
 if command -v yarn &> /dev/null; then
     export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 fi
+
+# Added by Windsurf
+export PATH="/Users/nick.gronow/.codeium/windsurf/bin:$PATH"

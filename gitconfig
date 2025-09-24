@@ -3,6 +3,7 @@
   name = Nick Gronow
 [alias]
   co = commit -m
+  cp = cherry-pick
   br = branch -v -v
   st = status -sb
   ch = checkout

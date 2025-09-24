@@ -52,7 +52,7 @@ function dk() {
   if [ -f bin/compose ]; then
     maincmd="bin/compose"
   fi
-  local subcommand=exec
+  local subcommand="exec"
   if [[ $1 = run ]]; then
     subcommand="run --rm"
   elif [[ $1 = up ]]; then
@@ -60,11 +60,11 @@ function dk() {
   fi
   if [[ $1 = ps || $1 = build || $1 = stop ]]; then
     eval "$maincmd $@"
-  elif [[ $# -eq 1 && $subcommand -ne up ]]; then
+  elif [[ $# -eq 1 && $subcommand != up ]]; then
     local service="$(docker compose ps --services | fzf)"
     echo "Running: $maincmd $subcommand $service bash"
     eval "$maincmd $subcommand $service bash"
-  elif [[ $# -eq 2 && $subcommand -ne up ]]; then
+  elif [[ $# -eq 2 && $subcommand != up ]]; then
     echo "Running: $maincmd $subcommand $2 bash"
     eval "$maincmd $subcommand $2 bash"
   else
@@ -97,7 +97,11 @@ function dkb() {
 # Kubernetes
 source <(kubectl completion zsh)
 alias k=kubectl
+alias kn=kubens
+alias kc=kubectx
 complete -F __start_kubectl k
+complete -F _kube_namespaces kn
+complete -F _kube_contexts kc
 
 function db() {
   kubectl port-forward svc/postgres-postgresql "4000:5432"
@@ -182,3 +186,4 @@ fi
 
 # Gcloud
 CLOUDSDK_COMPUTE_ZONE=us-central1-c
+
