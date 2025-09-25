@@ -100,6 +100,33 @@ set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Colorscheme
+Plug 'chriskempson/base16-vim'
+
+" Auto-format
+let g:ale_fix_on_save = 1
+let g:ale_disable_lsp = 1
+let g:ale_completion_enabled = 0
+let g:deoplete#sources#ale#enable = 0
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+highlight ALEErrorSign guifg=red guibg=none
+highlight ALEWarningSign guifg=yellow guibg=none
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'ruby': ['rubocop'],
+\}
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+Plug 'dense-analysis/ale'
+sign define DiagnosticSignError text=✗ texthl=DiagnosticError
+sign define DiagnosticSignWarn  text=⚠ texthl=DiagnosticWarn
+sign define DiagnosticSignInfo  text=i texthl=DiagnosticInfo
+sign define DiagnosticSignHint  text=H texthl=DiagnosticHint
+
 " SQL & PLPG
 Plug 'lifepillar/pgsql.vim'
 
@@ -112,19 +139,9 @@ Plug 'guns/xterm-color-table.vim'
 " Graphql
 Plug 'jparise/vim-graphql'
 
-" Dracula colors
-Plug 'dracula/vim', {'as': 'dracula'}
-Plug 'chriskempson/base16-vim'
-
-" iTerm2
-Plug 'tomjrees/vim-iterm2-navigator'
-
 " Vue syntax
 Plug 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
-
-" Earthly syntax
-Plug 'earthly/earthly.vim', { 'branch': 'main' }
 
 Plug 'tpope/vim-sensible'
 Plug 'sheerun/vim-polyglot'
@@ -145,9 +162,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'tpope/vim-commentary'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-endwise'
-
-" Ferret
-Plug 'wincent/ferret'
 
 " Git stuff
 Plug 'tpope/vim-fugitive'
@@ -302,26 +316,6 @@ let g:rg_highlight = 1
 " register) and you'll get a visual representation of the available registers
 Plug 'junegunn/vim-peekaboo'
 
-" snippets!
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-" To see this in action, go to a ruby file on a new line and type def<enter> or
-" fun<enter> in a vim file
-" Look up ultisnips to learn more and make your own
-
-" Testing!! rspec!
-Plug 'janko-m/vim-test'
-let test#strategy = "neovim"
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ta :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tv :TestVisit<CR>
-
-" Switch anything with gs (ex. true -> false) try hitting gs with your cursor
-" on true or false. This works with MANY things: https://github.com/AndrewRadev/switch.vim
-Plug 'AndrewRadev/switch.vim'
-
 " custom text objects
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
@@ -466,15 +460,6 @@ colorscheme base16-default-dark
 " \ })
 " " Remember: enter to insert snippet, tab and shift tab to insert completions
 
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
-
 " JSON formatter
 com! FormatJSON %!python3 -m json.tool
 com! ParseJSON execute 'normal G$xgg^x:%s/\v(\\)?\\"/"/g' | FormatJSON
@@ -494,7 +479,7 @@ endif
 
 " set background=dark
 " set t_Co=256
-" set termguicolors
+set termguicolors
 " let base16colorspace=256
 " colorscheme base16-default-dark
 hi Normal ctermbg=None

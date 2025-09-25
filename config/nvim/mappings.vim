@@ -155,3 +155,8 @@ nmap <leader>i Oimport ipdb; ipdb.set_trace()<esc>j0
 
 " Searching
 nmap <leader>/ :lgrep '\b<cword>\b'
+
+" ALE
+nmap gn :ALENext<cr>
+nmap gd :ALEDetail<cr>
+nmap gl :ALEPopulateQuickfix<cr>
