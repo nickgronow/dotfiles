@@ -82,7 +82,7 @@ nnoremap <c-n> :RG<cr>
 nnoremap <leader>fa :call RipgrepFzf(printf('\b%s\b', expand('<cword>')), 0, 'app')<cr>
 nnoremap <leader>fs :call RipgrepFzf(printf('\b%s\b', expand('<cword>')), 0, 'spec')<cr>
 nnoremap <leader>ff :call RipgrepFzf(printf('\bfactory :%s\b', expand('<cword>')), 0, 'spec/factories')<cr>
-nnoremap <leader>fd :call RipgrepFzf(printf('\bdef %s\b', expand('<cword>')), 0)<cr>
+nnoremap <leader>fd :call RipgrepFzf(printf('\b(def\|class) %s\b', expand('<cword>')), 0)<cr>
 nnoremap <leader>fs :call RipgrepFzf(printf('\bscope :%s\b', expand('<cword>')), 0)<cr>
 
 " Column/table formatting
@@ -158,5 +158,5 @@ nmap <leader>/ :lgrep '\b<cword>\b'
 
 " ALE
 nmap gn :ALENext<cr>
-nmap gd :ALEDetail<cr>
-nmap gl :ALEPopulateQuickfix<cr>
+nmap gd :ALEPopulateQuickfix<cr>
+nmap <leader>a :ALEToggleBuffer<cr>

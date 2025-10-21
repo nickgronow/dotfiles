@@ -110,8 +110,6 @@ let g:ale_completion_enabled = 0
 let g:deoplete#sources#ale#enable = 0
 let g:ale_sign_error = '✗'
 let g:ale_sign_warning = '⚠'
-highlight ALEErrorSign guifg=red guibg=none
-highlight ALEWarningSign guifg=yellow guibg=none
 let g:ale_fixers = {
 \   '*': ['remove_trailing_lines', 'trim_whitespace'],
 \   'javascript': ['eslint'],
@@ -126,6 +124,10 @@ sign define DiagnosticSignError text=✗ texthl=DiagnosticError
 sign define DiagnosticSignWarn  text=⚠ texthl=DiagnosticWarn
 sign define DiagnosticSignInfo  text=i texthl=DiagnosticInfo
 sign define DiagnosticSignHint  text=H texthl=DiagnosticHint
+autocmd ColorScheme * highlight DiagnosticWarn guifg=gray guibg=none
+autocmd ColorScheme * highlight DiagnosticError guifg=gray guibg=none
+highlight ALEErrorSign guifg=red guibg=none
+highlight ALEWarningSign guifg=yellow guibg=none
 
 " SQL & PLPG
 Plug 'lifepillar/pgsql.vim'
