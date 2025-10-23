@@ -43,6 +43,9 @@ alias rp="source ~/dotfiles/ohmyzsh"
 # Python
 alias python=/usr/bin/python3
 
+# Postgres
+path=("/opt/homebrew/opt/postgresql@17/bin" $path)
+
 # Docker
 alias dkc="docker compose"
 alias dku="docker compose up"
@@ -159,3 +162,7 @@ fi
 
 # Gcloud
 CLOUDSDK_COMPUTE_ZONE=us-central1-c
+
+# Python
+PATH=$(pyenv root)/shims:$PATH
+eval "$(pyenv init -)"

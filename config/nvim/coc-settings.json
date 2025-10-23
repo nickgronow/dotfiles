@@ -1,41 +1,14 @@
 {
-  "markdownlint.config": {
-    "line_length": false
-  },
   "coc.preferences.enableMarkdown": false,
+  "coc.preferences.formatOnSave": true,
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": true,
-  "git.enableGlobalStatus": false,
-  "python.jediEnabled": true,
-  "python.formatting.provider": "black",
-  "python.formatting.blackArgs": ["-t", "py37", "--fast", "-l", "88"],
-  "coc.preferences.formatOnSaveFiletypes": [
-    "javascript",
-    "typescript",
-    "vue",
-    "python",
-    "ruby"
-  ],
   "coc.preferences.willSaveHandlerTimeout": 1000,
-  "graphql.filetypes": ["graphql"],
   "solargraph.checkGemVersion": false,
   "solargraph.diagnostics": true,
   "solargraph.formatting": true,
-  "languageserver": {
-    "ccls": {
-      "command": "ccls",
-      "filetypes": ["c", "cpp", "cuda", "objc", "objcpp"],
-      "rootPatterns": [".ccls", "compile_commands.json", ".git"],
-      "initializationOptions": {
-        "cache": {
-          "directory": ".ccls-cache"
-        },
-        "client": {
-          "snippetSupport": true
-        }
-      }
-    }
-  },
-  "svelte.enable-ts-plugin": true,
-  "prettier.printWidth": 120,
-  "prettier.singleQuote": true
+  "tsserver.log": "verbose",
+  "tsserver.trace.server": "verbose",
+  "typescript.format.enable": true,
+  "prettier.requireConfig": false,
+  "svelte.enable-ts-plugin": true
 }

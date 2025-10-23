@@ -57,7 +57,7 @@ set wildmenu
 set wildmode=longest,full
 " Highlight tabs (aka the devil)
 highlight SpecialKey ctermfg=1
-set list
+set nolist
 set listchars=tab:··
 set autowrite
 set autowriteall
@@ -67,17 +67,14 @@ set autoindent " might not want this in the future, up to you
 " Gutter config
 set numberwidth=4
 set signcolumn=yes:1
-
-hi CursorLineNr cterm=bold
-hi CursorLine cterm=none ctermbg=black
-augroup CursorLine
-  au!
-  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
-  au WinLeave * setlocal nocursorline
-augroup END
+set nocursorline
+hi Visual ctermbg=DarkGrey
 
 " Python
 autocmd FileType python setlocal shiftwidth=4 softtabstop=4 expandtab textwidth=88
+
+" Typescript
+autocmd FileType typescript setlocal shiftwidth=2 softtabstop=2 expandtab textwidth=80
 
 " C
 autocmd BufRead,BufNewFile *.h setfiletype c
@@ -102,8 +99,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 " SQL & PLPG
 Plug 'lifepillar/pgsql.vim'
 
-" COC ZSH
-Plug 'tjdevries/coc-zsh'
+" Windsurf
+Plug 'Exafunction/windsurf.vim', { 'branch': 'main' }
 
 " xterm colors
 Plug 'guns/xterm-color-table.vim'
@@ -199,7 +196,6 @@ let g:airline#extensions#tagbar#enabled = 1
 let g:airline#extensions#fugitiveline#enabled = 0
 let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#gutentags#enabled = 1
-let g:airline#extensions#coc#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
 let g:airline_theme='dracula'
@@ -393,19 +389,9 @@ nnoremap <silent> ( 0
 " hit escape to remove highlighting from incremental search
 nnoremap <silent> <esc> :noh<return><esc>
 
-" LSP support
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-let g:coc_global_extensions = ['coc-solargraph']
-" hi CocErrorSign ctermbg=black
 hi Pmenu ctermbg=234 ctermfg=251
 hi PmenuSel ctermbg=232 ctermfg=255
 " hi PmenuSbar ctermbg=0 guibg=#d6d6d6
-
-" Prettier
-Plug 'prettier/vim-prettier'
-let g:prettier#quickfix_enabled = 0
-let g:prettier#autoformat_require_pragma = 0
-au BufWritePre *.css,*.svelte,*.pcss,*.html,*.ts,*.js,*.json PrettierAsync
 
 call plug#end()
 
@@ -471,6 +457,3 @@ com! OpenFiles call fzf#run({'source': 'find . -type d \( -path ./coverage -o -p
 
 " CTags
 com! TS execute 'ts '.expand("<cword>")
-
-" Prettier
-" com! -nargs=0 Prettier :CocCommand prettier.formatFile
