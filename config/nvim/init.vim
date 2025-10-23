@@ -84,6 +84,9 @@ autocmd FileType c setlocal tabstop=8 shiftwidth=8 softtabstop=8 noexpandtab nol
 let g:xml_syntax_folding=1
 au FileType xml setlocal foldmethod=syntax
 
+" ejson
+au BufRead,BufNewFile *.ejson set syntax=json
+
 " Run PlugInstall if there's missing plugins
 autocmd VimEnter *
       \  if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
@@ -95,6 +98,35 @@ set timeout
 set timeoutlen=400 ttimeoutlen=0
 
 call plug#begin('~/.local/share/nvim/plugged')
+
+" Colorscheme
+Plug 'chriskempson/base16-vim'
+
+" Auto-format
+let g:ale_fix_on_save = 1
+let g:ale_disable_lsp = 1
+let g:ale_completion_enabled = 0
+let g:deoplete#sources#ale#enable = 0
+let g:ale_sign_error = '✗'
+let g:ale_sign_warning = '⚠'
+let g:ale_fixers = {
+\   '*': ['remove_trailing_lines', 'trim_whitespace'],
+\   'javascript': ['eslint'],
+\   'typescript': ['eslint'],
+\   'ruby': ['rubocop'],
+\}
+let g:ale_linters = {
+\   'python': ['flake8'],
+\}
+Plug 'dense-analysis/ale'
+sign define DiagnosticSignError text=✗ texthl=DiagnosticError
+sign define DiagnosticSignWarn  text=⚠ texthl=DiagnosticWarn
+sign define DiagnosticSignInfo  text=i texthl=DiagnosticInfo
+sign define DiagnosticSignHint  text=H texthl=DiagnosticHint
+autocmd ColorScheme * highlight DiagnosticWarn guifg=gray guibg=none
+autocmd ColorScheme * highlight DiagnosticError guifg=gray guibg=none
+highlight ALEErrorSign guifg=red guibg=none
+highlight ALEWarningSign guifg=yellow guibg=none
 
 " SQL & PLPG
 Plug 'lifepillar/pgsql.vim'
@@ -108,23 +140,16 @@ Plug 'guns/xterm-color-table.vim'
 " Graphql
 Plug 'jparise/vim-graphql'
 
-" Dracula colors
-Plug 'dracula/vim', {'as': 'dracula'}
-
-" iTerm2
-Plug 'tomjrees/vim-iterm2-navigator'
-
 " Vue syntax
 Plug 'posva/vim-vue'
 autocmd FileType vue syntax sync fromstart
-
-" Earthly syntax
-Plug 'earthly/earthly.vim', { 'branch': 'main' }
 
 Plug 'tpope/vim-sensible'
 Plug 'sheerun/vim-polyglot'
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
+let g:fzf_vim = {}
+let g:fzf_vim.preview_window = ['hidden,right,50%,<70(up,40%)', 'ctrl-p']
 
 " Docker
 Plug 'ekalinin/Dockerfile.vim'
@@ -138,9 +163,6 @@ Plug 'haya14busa/incsearch.vim'
 Plug 'tpope/vim-commentary'
 Plug 'ntpeters/vim-better-whitespace'
 Plug 'tpope/vim-endwise'
-
-" Ferret
-Plug 'wincent/ferret'
 
 " Git stuff
 Plug 'tpope/vim-fugitive'
@@ -198,7 +220,7 @@ let g:airline#extensions#gutentags#enabled = 1
 let g:airline#extensions#gutentags#enabled = 1
 let g:airline_powerline_fonts = 0
 let g:airline_skip_empty_sections = 1
-let g:airline_theme='dracula'
+let g:airline_theme='base16'
 
 " Highlight colors in any buffer
 Plug 'ap/vim-css-color'
@@ -239,26 +261,6 @@ let g:rg_highlight = 1
 " register) and you'll get a visual representation of the available registers
 Plug 'junegunn/vim-peekaboo'
 
-" snippets!
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-" To see this in action, go to a ruby file on a new line and type def<enter> or
-" fun<enter> in a vim file
-" Look up ultisnips to learn more and make your own
-
-" Testing!! rspec!
-Plug 'janko-m/vim-test'
-let test#strategy = "neovim"
-nmap <silent> <leader>tn :TestNearest<CR>
-nmap <silent> <leader>tf :TestFile<CR>
-nmap <silent> <leader>ta :TestSuite<CR>
-nmap <silent> <leader>tl :TestLast<CR>
-nmap <silent> <leader>tv :TestVisit<CR>
-
-" Switch anything with gs (ex. true -> false) try hitting gs with your cursor
-" on true or false. This works with MANY things: https://github.com/AndrewRadev/switch.vim
-Plug 'AndrewRadev/switch.vim'
-
 " custom text objects
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-line'
@@ -280,9 +282,6 @@ Plug 'tpope/vim-unimpaired'
 " SQL formatting
 Plug 'vim-scripts/SQLUtilities'
 
-" Needed for SQL formatting
-Plug 'vim-scripts/Align'
-
 " Bracket, parens, quotes in pair
 Plug 'jiangmiao/auto-pairs'
 
@@ -292,16 +291,19 @@ Plug 'leafgarland/typescript-vim'
 
 let g:vim_svelte_plugin_load_full_syntax = 1
 
-function! RipgrepFzf(query, fullscreen, glob_prefix, ...)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
+function! RipgrepFzf(query, fullscreen, ...)
+  let iglob = ''
+  if a:0
+    let iglob = "--iglob '" . a:1 . "/**/*'"
+  endif
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case %s -- %s || true'
+  let initial_command = printf(command_fmt, iglob, shellescape(a:query))
+  let reload_command = printf(command_fmt, iglob, '{q}')
   let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
   call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
 endfunction
 
-command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, '', <f-args>)
-command! -nargs=* -bang RGI call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, '!', <f-args>)
+command! -nargs=* -bang RG call RipgrepFzf(printf('\b%s\b', expand('<cword>')), <bang>0, <f-args>)
 
 let g:fzf_action = {
       \ 'ctrl-t': 'tab split',
@@ -337,10 +339,6 @@ endfunction
 " Also when using things like space f f or space f u you can hit tab to select multiple
 " files, and they pop into the quick fix list. When you get more into the
 " quickfix list you might want to try https://github.com/romainl/vim-qf
-nnoremap <silent> <leader>/ :execute 'Rg ' . input('ripgrep: ')<CR>
-nnoremap <silent> <leader>/ :execute 'Rg ' . input('ripgrep: ')<CR>
-nnoremap <silent> <leader>* :call SearchWordWithRg()<CR>
-vnoremap <silent> <leader>* :call SearchVisualSelectionWithRg()<CR>
 nnoremap <silent> <leader>fl :BLines<CR>
 nnoremap <silent> <leader>fb :Buffers<CR>
 nnoremap <silent> <leader>fL :Lines<CR>
@@ -395,6 +393,8 @@ hi PmenuSel ctermbg=232 ctermfg=255
 
 call plug#end()
 
+colorscheme base16-default-dark
+
 " " Finally, some more autocomplete settings that need to happen outside the vim
 " " plug block:
 " let g:SuperTabDefaultCompletionType = "<c-n>"
@@ -410,15 +410,6 @@ call plug#end()
 " \ }
 " \ })
 " " Remember: enter to insert snippet, tab and shift tab to insert completions
-
-inoremap <silent><expr> <TAB>
-    \ pumvisible() ? "\<C-n>" :
-    \ <SID>check_back_space() ? "\<TAB>" :
-    \ deoplete#mappings#manual_complete()
-function! s:check_back_space() abort "{{{
-    let col = col('.') - 1
-    return !col || getline('.')[col - 1]  =~ '\s'
-endfunction"}}}
 
 " JSON formatter
 com! FormatJSON %!python3 -m json.tool
@@ -439,7 +430,7 @@ endif
 
 " set background=dark
 " set t_Co=256
-" set termguicolors
+set termguicolors
 " let base16colorspace=256
 " colorscheme base16-default-dark
 hi Normal ctermbg=None
@@ -457,3 +448,20 @@ com! OpenFiles call fzf#run({'source': 'find . -type d \( -path ./coverage -o -p
 
 " CTags
 com! TS execute 'ts '.expand("<cword>")
+
+" Searching - quickfix window for grepping
+" create a self-clearing autocommand group called 'qf'
+augroup qf
+    " clear all autocommands in this group
+    autocmd!
+
+    " do :cwindow if the quickfix command doesn't start
+    " with a 'l' (:grep, :make, etc.)
+    autocmd QuickFixCmdPost [^l]* cwindow
+
+    " do :lwindow if the quickfix command starts with
+    " a 'l' (:lgrep, :lmake, etc.)
+    autocmd QuickFixCmdPost l*    lwindow
+augroup END
+
+" autocmd BufWritePost *.rb !rubocop -A %

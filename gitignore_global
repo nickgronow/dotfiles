@@ -33,3 +33,4 @@ bin/start
 .ccls
 .solargraph.yml
 config/master.key
+coverage

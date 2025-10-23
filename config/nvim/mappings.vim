@@ -54,7 +54,7 @@ nnoremap  <leader>n :set hlsearch!<cr>
 nnoremap <leader>u :set rnu!<cr>
 
 " Toggle viewing whitespaces
-nnoremap <leader>wh :ToggleWhitespace<cr>
+nnoremap <leader>w <c-w>c<c-w>=
 " :highlight SpecialKey ctermfg=darkgray
 nnoremap <leader>ts :list!
 
@@ -71,7 +71,7 @@ nnoremap <c-k> <c-w>k
 nnoremap <c-l> <c-w>l
 
 " Save file
-nnoremap <c-s> :up<cr>
+nnoremap <c-s> :w<cr>
 
 " Get out of insert mode
 inoremap <c-s> <esc>
@@ -79,12 +79,16 @@ inoremap <c-s> <esc>
 " Open buffers - MVC emphasis
 nnoremap <c-p> :bp<cr>
 nnoremap <c-n> :RG<cr>
-nnoremap <leader>fm :call RipgrepFzf(printf('\bfactory :%s\b', expand('<cword>')), 0, '', 'spec/factories')<cr>
+nnoremap <leader>fa :call RipgrepFzf(printf('\b%s\b', expand('<cword>')), 0, 'app')<cr>
+nnoremap <leader>fs :call RipgrepFzf(printf('\b%s\b', expand('<cword>')), 0, 'spec')<cr>
+nnoremap <leader>ff :call RipgrepFzf(printf('\bfactory :%s\b', expand('<cword>')), 0, 'spec/factories')<cr>
+nnoremap <leader>fd :call RipgrepFzf(printf('\b(def\|class) %s\b', expand('<cword>')), 0)<cr>
+nnoremap <leader>fs :call RipgrepFzf(printf('\bscope :%s\b', expand('<cword>')), 0)<cr>
 
 " Column/table formatting
 " nnoremap <leader>fh YpV:s/\v\w+/---/<cr>:set nohlsearch<cr>k
-vnoremap <leader>fc :s/\v\s+/ /<cr>gv:!column -t -s \\|<cr>gv:s/\v(  [^ ])/\\|\1<cr>:set nohlsearch<cr>
-nnoremap <silent> <leader>fs :SQLUFormatter<CR>
+" vnoremap <leader>fc :s/\v\s+/ /<cr>gv:!column -t -s \\|<cr>gv:s/\v(  [^ ])/\\|\1<cr>:set nohlsearch<cr>
+" nnoremap <silent> <leader>fs :SQLUFormatter<CR>
 
 " Git
 nnoremap <leader>gb :Git blame<cr>
@@ -128,28 +132,6 @@ vmap <leader>c :Commentary<CR>
 " Split by commas
 vnoremap <leader>, :s/\v\s+(\w+)(,\|\n)/\r\1\2/g<cr>
 
-" COC LSP
-" inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
-" nmap <leader>r <Plug>(coc-rename)
-if has('nvim')
-  inoremap <silent><expr> <c-c> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-nmap <leader>aa <Plug>(coc-codeaction)
-nmap <leader>af <Plug>(coc-fix-current)
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" GoTo code navigation.
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
 
@@ -162,10 +144,18 @@ function! s:show_documentation()
 endfunction
 
 " Ctags
-" nnoremap <C-]> g<C-]>
+nnoremap <C-]> g<C-]>
 
 " c file toggling
 map <leader>sc :e %:s,.h$,.X123X,:s,.c$,.h,:s,.X123X$,.c,<CR>
 
 " Python ipdb
 nmap <leader>i Oimport ipdb; ipdb.set_trace()<esc>j0
+
+" Searching
+nmap <leader>/ :lgrep '\b<cword>\b'
+
+" ALE
+nmap gn :ALENext<cr>
+nmap gd :ALEPopulateQuickfix<cr>
+nmap <leader>a :ALEToggleBuffer<cr>

@@ -3,15 +3,18 @@
   name = Nick Gronow
 [alias]
   co = commit -m
+  cp = cherry-pick
   br = branch -v -v
   st = status -sb
   ch = checkout
+  c = ! git checkout $(git branch -v | fzf | sed -E 's/^\\s*(\\*\\s)?//' | sed -E 's/\\s.*//')
   aa = add --all :/
   resh = reset --hard HEAD
   ctags = "!.git/hooks/ctags"
   mylog = log -p --author='Nick Gronow'
   ls = log --decorate --oneline
   lg = log --pretty=format:'%C(yellow)%h%Creset  %>(12)%C(green)%ar%Creset  %<(18)%C(bold blue)%aN%Creset %C(red)%d%Creset %s'
+  tg = for-each-ref --sort=creatordate --format '%(refname) %(creatordate)' refs/tags
   lgw = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%ar)%Creset %C(ul)(%cr)%Creset %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
   diff-file = diff -p --no-prefix -U1000
   gone = ! "git fetch -p && git for-each-ref --format '%(refname:short) %(upstream:track)' | awk '$2 == \"[gone]\" {print $1}' | xargs -r git branch -D"
@@ -19,6 +22,7 @@
   filemode = true
   quotepath = false
   excludesfile = ~/.gitignore_global
+  pager = less -i
 [merge]
   tool = nvim
 [push]

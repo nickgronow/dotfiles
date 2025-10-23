@@ -116,3 +116,9 @@ if [ -f '/Users/nick/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/
 
 # The next line enables shell command completion for gcloud.
 if [ -f '/Users/nick/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nick/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
+
+# Warp
+function set_name () {
+  echo -ne "\033]0;${PWD/#$HOME/~}\007"
+}
+precmd_functions+=(set_name)
