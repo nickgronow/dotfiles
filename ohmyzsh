@@ -42,6 +42,7 @@ zvm_after_init_commands+=('[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh')
 alias vim=nvim
 alias ep="vim ~/dotfiles/ohmyzsh"
 alias rp="source ~/dotfiles/ohmyzsh"
+alias vimgit="git diff --name-only HEAD^ | xargs nvim"
 
 # Python
 alias python=/usr/bin/python3
