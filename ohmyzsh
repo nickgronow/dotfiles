@@ -194,7 +194,3 @@ fi
 
 # Gcloud
 CLOUDSDK_COMPUTE_ZONE=us-central1-c
-
-# Python
-PATH=$(pyenv root)/shims:$PATH
-eval "$(pyenv init -)"

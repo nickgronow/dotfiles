@@ -102,6 +102,9 @@ call plug#begin('~/.local/share/nvim/plugged')
 " Colorscheme
 Plug 'chriskempson/base16-vim'
 
+" Gutentags
+Plug 'ludovicchabant/vim-gutentags'
+
 " Auto-format
 let g:ale_fix_on_save = 1
 let g:ale_disable_lsp = 1
