@@ -111,12 +111,6 @@ case ":$PATH:" in
 esac
 # pnpm end
 
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/nick/Downloads/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nick/Downloads/google-cloud-sdk/path.zsh.inc'; fi
-
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/nick/Downloads/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nick/Downloads/google-cloud-sdk/completion.zsh.inc'; fi
-
 # Warp
 function set_name () {
   echo -ne "\033]0;${PWD/#$HOME/~}\007"
